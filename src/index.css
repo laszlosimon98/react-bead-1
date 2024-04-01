@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .screen-min-height {
+    min-height: calc(100vh - 2.5rem);
+  }
+}
