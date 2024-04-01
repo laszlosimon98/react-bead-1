@@ -1,7 +1,7 @@
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
-import Modal from "./SalaryCalculator/components/Modal";
+// import Modal from "./SalaryCalculator/components/Modal";
 
 const HouseholdSalaryCalculator = () => {
   return (
@@ -14,11 +14,11 @@ const HouseholdSalaryCalculator = () => {
         <HouseholdSummary />
       </div>
 
-      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50">
+      {/* <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50">
         <div className="flex justify-center items-center w-full h-screen">
           <Modal />
         </div>
-      </div>
+      </div> */}
     </main>
   );
 };
