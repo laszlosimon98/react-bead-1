@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 type ButtonType = {
   value: string;
@@ -9,7 +11,7 @@ const FamilyMemberTabs = () => {
   const [buttons, setButtons] = useState<ButtonType[]>([
     {
       value: "Bendi",
-      selected: false,
+      selected: true,
     },
     {
       value: "Laci",
@@ -38,12 +40,12 @@ const FamilyMemberTabs = () => {
   };
 
   return (
-    <div className="flex absolute -top-10">
+    <div className="flex absolute -top-12">
       {buttons.map((button, i) => (
         <button
           key={i}
           onClick={() => handleButton(button)}
-          className={`w-16 h-8 hover:bg-zinc-700 active:bg-zinc-600 flex justify-center items-center rounded-lg cursor-pointer mr-2 ${
+          className={`w-16 h-10 hover:bg-zinc-700 active:bg-zinc-600 flex justify-center items-center rounded-lg cursor-pointer mr-2 ${
             button.selected
               ? "bg-zinc-200 text-black"
               : "bg-zinc-500 text-white"
@@ -52,11 +54,10 @@ const FamilyMemberTabs = () => {
           {button.value}
         </button>
       ))}
-      <div className="w-9 h-8 bg-zinc-300 flex justify-center items-center rounded-lg cursor-pointer">
-        <div className="hover:bg-slate-50 w-7 h-7 text-lg leading-none flex justify-center items-center rounded-md">
-          +
-        </div>
-      </div>
+
+      <button className="bg-zinc-300 text-black  hover:bg-zinc-400 active:bg-zinc-400 active:text-white  w-[2.5rem] h-[2.5rem] rounded-md">
+        <FontAwesomeIcon icon={faPlus} />
+      </button>
     </div>
   );
 };

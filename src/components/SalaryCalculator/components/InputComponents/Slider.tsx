@@ -13,7 +13,7 @@ const Slider = () => {
         max={20}
         step={1}
         defaultValue={0}
-        className="w-full sm:w-[25rem] md:w-[30rem] lg:w-[25rem]"
+        className="w-full sm:w-[25rem] md:w-[30rem] lg:w-[25rem] accent-zinc-600 "
         onChange={handleChange}
       />
     </>

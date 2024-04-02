@@ -5,46 +5,50 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 const SalaryCalculator = () => {
   return (
-    <div className="m-5 relative">
-      <div className="flex flex-col sm:items-center">
-        <div className="flex justify-between">
-          <h2 className="uppercase text-md font-bold sm:text-lg md:text-xl lg:text-xl">
-            Bendi Bérének kiszámítása
-          </h2>
-          <button className="bg-red-500 text-white hover:bg-red-700 active:bg-red-600 w-[4rem] h-[2rem] rounded-md py-1 px-2 sm:absolute sm:-top-[3.7rem] sm:-right-5">
-            Törlés
-          </button>
+    <div className="p-5 flex flex-col items-start justify-between h-full sm:relative">
+      <div>
+        <div className="flex flex-col sm:items-center">
+          <div className="flex justify-between">
+            <h2 className="uppercase text-md font-bold sm:text-lg md:text-xl lg:text-xl">
+              Bendi Bérének kiszámítása
+            </h2>
+            <button className="bg-zinc-500 text-white hover:text-black hover:bg-zinc-300 active:bg-zinc-400 active:text-white  w-[2.5rem] h-[2.5rem] rounded-md sm:absolute sm:-top-[3rem] sm:right-0">
+              <FontAwesomeIcon icon={faTrashCan} />
+            </button>
+          </div>
+
+          <Input title="Családtag neve" name="nev" />
+          <Input title="Bruttó bér" name="ber" />
+
+          <Slider />
+
+          <div className="flex w-full justify-center mt-2 items-center">
+            <PercentButton value={-1} />
+            <PercentButton value={-5} />
+            <PercentButton value={1} />
+            <PercentButton value={5} />
+          </div>
         </div>
 
-        <Input title="Családtag neve" name="nev" />
-        <Input title="Bruttó bér" name="ber" />
-
-        <Slider />
-
-        <div className="flex w-full justify-center mt-2 items-center">
-          <PercentButton value={-1} />
-          <PercentButton value={-5} />
-          <PercentButton value={1} />
-          <PercentButton value={5} />
+        <h3 className="font-bold mt-4 mb-2">Kedvezmények</h3>
+        <div className="flex flex-col h-36 justify-evenly">
+          <Under25 />
+          <JustMarried />
+          <PersonalTax />
+          <Family />
         </div>
       </div>
 
-      <h3 className="font-bold mt-4 mb-2">Kedvezmények</h3>
-      <div className="flex flex-col h-32 justify-evenly">
-        <Under25 />
-        <JustMarried />
-        <PersonalTax />
-        <Family />
-      </div>
-
-      <div className="relative h-40 w-full">
-        <h3 className="absolute bottom-14 text-2xl w-full text-center">
+      <div className="w-full self-center flex flex-col justify-center items-center">
+        <h3 className="text-xl sm:text-2xl w-full text-center">
           Számított nettó bér:
         </h3>
-        <div className="bg-zinc-700 text-white mt-3 w-[8.5rem] h-12 flex justify-center items-center rounded-lg absolute bottom-0 left-1/2 -translate-x-1/2">
+        <div className="bg-zinc-700 text-white sm:mt-3 w-[8.5rem] h-12 flex justify-center items-center rounded-lg">
           130.000 Ft
         </div>
       </div>

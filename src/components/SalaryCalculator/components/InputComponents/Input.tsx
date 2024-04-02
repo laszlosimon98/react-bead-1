@@ -10,7 +10,7 @@ const Input = ({ title, name }: InputProps) => {
         {title}
       </label>
       <input
-        className="rounded-md w-full sm:w-[25rem] md:w-[30rem] lg:w-[25rem] py-1 px-2"
+        className="rounded-md w-full sm:w-[25rem] md:w-[30rem] lg:w-[25rem] py-1 px-2 shadow-md"
         type="text"
         name={name}
         id={name}
