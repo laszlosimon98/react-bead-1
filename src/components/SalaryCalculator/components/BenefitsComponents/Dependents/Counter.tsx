@@ -1,48 +1,28 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Dispatch, SetStateAction, useState } from "react";
+import { LeftCounter } from "./CounterComponents/LeftCounter";
+import { RightCounter } from "./CounterComponents/RightCounter";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 
 type CounterProps = {
-  max?: number;
-  setMax?: Dispatch<SetStateAction<number>>;
+  maxValue: number;
+  setMaxValue: Dispatch<SetStateAction<number>>;
+  setCounter: Dispatch<SetStateAction<number>>;
+  counter: number;
+  children: string | ReactElement;
 };
 
-const Counter = ({ max, setMax }: CounterProps) => {
-  const [count, setCount] = useState<number>(1);
-
-  const handleIncrease = () => {
-    if (max && count < max) {
-      setCount(count + 1);
-    }
-
-    if (!max) {
-      setCount(count + 1);
-    }
-
-    if (setMax) setMax(count);
-  };
-
-  const handleDecrease = () => {
-    if (count > 1) setCount(count - 1);
-  };
-
+const Counter = ({
+  maxValue,
+  setMaxValue,
+  setCounter,
+  counter,
+  children,
+}: CounterProps) => {
   return (
-    <div className="flex gap-2">
-      <button
-        className="w-4 h-4 sm:w-6 sm:h-6 text-xs sm:text-sm flex justify-center items-center rounded-full cursor-pointer bg-zinc-100 hover:bg-zinc-300 active:bg-zinc-200"
-        onClick={handleDecrease}
-      >
-        <FontAwesomeIcon icon={faMinus} />
-      </button>
-
-      <p className="text-sm sm:text-base ">{count}</p>
-      <button
-        className="w-4 h-4 sm:w-6 sm:h-6 text-xs sm:text-sm flex justify-center items-center rounded-full cursor-pointer bg-zinc-100 hover:bg-zinc-300 active:bg-zinc-200"
-        onClick={handleIncrease}
-      >
-        <FontAwesomeIcon icon={faPlus} />
-      </button>
-    </div>
+    <>
+      <LeftCounter setCounter={setCounter} setMaxValue={setMaxValue} />
+      {children}
+      <RightCounter counter={counter} maxValue={maxValue} />
+    </>
   );
 };
 
