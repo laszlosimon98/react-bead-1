@@ -5,22 +5,15 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 const SalaryCalculator = () => {
   return (
-    <div className="p-5 flex flex-col items-start justify-between h-full sm:relative">
-      <div>
-        <div className="flex flex-col sm:items-center">
-          <div className="flex justify-between">
-            <h2 className="uppercase text-md font-bold sm:text-lg md:text-xl lg:text-xl">
-              Bendi Bérének kiszámítása
-            </h2>
-            <button className="bg-zinc-500 text-white hover:text-black hover:bg-zinc-300 active:bg-zinc-400 active:text-white  w-[2.5rem] h-[2.5rem] rounded-md sm:absolute sm:-top-[3rem] sm:right-0">
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
-          </div>
+    <div className="p-5 flex flex-col items-start justify-between h-full sm:relative w-full">
+      <div className="w-full">
+        <div className="flex flex-col sm:items-center sm:justify-center w-full">
+          <h2 className="uppercase text-md font-bold sm:text-lg md:text-xl lg:text-xl text-center">
+            Bendi Bérének kiszámítása
+          </h2>
 
           <Input title="Családtag neve" name="nev" />
           <Input title="Bruttó bér" name="ber" />

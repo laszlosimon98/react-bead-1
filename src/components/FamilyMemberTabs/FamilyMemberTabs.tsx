@@ -1,63 +1,89 @@
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import Member from "./components/Member";
+import AddButton from "./components/AddButton";
+import DeleteButton from "./components/DeleteButton";
 
-type ButtonType = {
-  value: string;
+export type MemberType = {
+  id: number;
+  name: string;
   selected: boolean;
 };
 
 const FamilyMemberTabs = () => {
-  const [buttons, setButtons] = useState<ButtonType[]>([
+  const [members, setMembers] = useState<MemberType[]>([
     {
-      value: "Bendi",
+      id: 1,
+      name: "Bendi",
       selected: true,
     },
     {
-      value: "Laci",
+      id: 2,
+      name: "Laci",
       selected: false,
     },
     {
-      value: "Lajos",
+      id: 3,
+      name: "Lajos",
       selected: false,
     },
     {
-      value: "Ferenc",
+      id: 4,
+      name: "Ferenc",
       selected: false,
     },
   ]);
 
-  const handleButton = (button: ButtonType) => {
-    const selectedBtn = buttons.find((btn) => btn.value === button.value);
+  const handleMember = (button: MemberType) => {
+    const selectedBtn = members.find((btn) => btn.name === button.name);
     if (!selectedBtn) return;
 
-    const result = buttons.map((btn) => ({
+    const result = members.map((btn) => ({
       ...btn,
-      selected: btn.value === selectedBtn.value,
+      selected: btn.name === selectedBtn.name,
     }));
 
-    setButtons(result);
+    setMembers(result);
+  };
+
+  const handleAddMember = () => {
+    const newMember: MemberType = {
+      id: members.length ? members[members.length - 1].id + 1 : 1,
+      name: "Új tag",
+      selected: true,
+    };
+
+    const currentMembers = members.map((mem) => ({
+      ...mem,
+      selected: false,
+    }));
+
+    setMembers([...currentMembers, newMember]);
+  };
+
+  const handleDelete = () => {
+    const member = members.find((mem) => mem.selected);
+    if (!member) return;
+
+    const newMembers = members.filter((mem) => mem.id !== member.id);
+    if (newMembers[0]) {
+      newMembers[0].selected = true;
+    } else {
+      setMembers([]);
+    }
+
+    setMembers([...newMembers]);
   };
 
   return (
-    <div className="flex absolute -top-12">
-      {buttons.map((button, i) => (
-        <button
-          key={i}
-          onClick={() => handleButton(button)}
-          className={`w-16 h-10 hover:bg-zinc-700 active:bg-zinc-600 flex justify-center items-center rounded-lg cursor-pointer mr-2 ${
-            button.selected
-              ? "bg-zinc-200 text-black"
-              : "bg-zinc-500 text-white"
-          }`}
-        >
-          {button.value}
-        </button>
+    <div className="flex absolute -top-12 w-full">
+      {members.map((button, i) => (
+        <Member key={i} btn={button} handleMember={handleMember} />
       ))}
 
-      <button className="bg-zinc-300 text-black  hover:bg-zinc-400 active:bg-zinc-400 active:text-white  w-[2.5rem] h-[2.5rem] rounded-md">
-        <FontAwesomeIcon icon={faPlus} />
-      </button>
+      <div className="flex justify-between w-full">
+        <AddButton handleAddMember={handleAddMember} />
+        <DeleteButton handleDelete={handleDelete} />
+      </div>
     </div>
   );
 };
