@@ -1,11 +1,29 @@
-import { ReactElement } from "react";
+import { FormEvent, ReactElement } from "react";
+import { useMemberContext } from "../../../../hooks/useMemberContext";
 
 type InputProps = {
   title: string;
   name: string;
+  property: string;
 };
 
-const Input = ({ title, name }: InputProps): ReactElement => {
+const Input = ({ title, name, property }: InputProps): ReactElement => {
+  const { members, setMembers, selectedMember } = useMemberContext();
+
+  const handleInput = (e: FormEvent<HTMLInputElement>) => {
+    const newMembersArray = members.map((member) => {
+      if (member.id === selectedMember().id) {
+        member = {
+          ...selectedMember(),
+          [property]: e.currentTarget.value,
+        };
+      }
+      return member;
+    });
+
+    setMembers(newMembersArray);
+  };
+
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="font-semibold mb-1 text-sm">
@@ -16,6 +34,8 @@ const Input = ({ title, name }: InputProps): ReactElement => {
         type="text"
         name={name}
         id={name}
+        onInput={handleInput}
+        value={selectedMember()[property] as string}
       />
       <p className="text-sm lowercase first-letter:uppercase opacity-70 mt-1 mb-2">
         Add meg a {title}t!

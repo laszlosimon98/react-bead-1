@@ -6,18 +6,21 @@ import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
 import { ReactElement } from "react";
+import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {
+  const { selectedMember } = useMemberContext();
+
   return (
     <div className="p-5 flex flex-col items-start justify-between h-full sm:relative w-full">
       <div className="w-full">
         <div className="flex flex-col sm:items-center sm:justify-center w-full">
           <h2 className="uppercase text-md font-bold sm:text-lg md:text-xl lg:text-xl text-center">
-            Bendi Bérének kiszámítása
+            {selectedMember().name} Bérének kiszámítása
           </h2>
 
-          <Input title="Családtag neve" name="nev" />
-          <Input title="Bruttó bér" name="ber" />
+          <Input title="Családtag neve" name="nev" property="name" />
+          <Input title="Bruttó bér" name="ber" property="bsalary" />
 
           <Slider />
 

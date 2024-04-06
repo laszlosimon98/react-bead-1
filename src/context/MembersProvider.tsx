@@ -6,8 +6,10 @@ import {
 } from "react";
 
 export type MemberType = {
+  [key: string]: string | number | boolean;
   id: number;
   name: string;
+  bsalary: number;
   selected: boolean;
 };
 
@@ -15,21 +17,25 @@ const initMemberState: MemberType[] = [
   {
     id: 1,
     name: "Bendi",
+    bsalary: 100000,
     selected: true,
   },
   {
     id: 2,
     name: "Laci",
+    bsalary: 185000,
     selected: false,
   },
   {
     id: 3,
     name: "Lajos",
+    bsalary: 230000,
     selected: false,
   },
   {
     id: 4,
     name: "Ferenc",
+    bsalary: 300000,
     selected: false,
   },
 ];
@@ -50,7 +56,9 @@ const useHandleContext = (): ContextType => {
     useState<ContextType["members"]>(initMemberState);
 
   const selectedMember = (): MemberType => {
-    return members[0];
+    const selectedMember = members.find((member) => member.selected);
+
+    return selectedMember!;
   };
 
   const handleMember = (button: MemberType): void => {
@@ -69,6 +77,7 @@ const useHandleContext = (): ContextType => {
     const newMember: MemberType = {
       id: members.length ? members[members.length - 1].id + 1 : 1,
       name: "Új tag",
+      bsalary: 0,
       selected: true,
     };
 
