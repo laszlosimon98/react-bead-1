@@ -9,7 +9,7 @@ const DeleteButton = ({ handleDelete }: DeleteButtonProps) => {
   return (
     <button
       onClick={handleDelete}
-      className="bg-zinc-500 text-white hover:text-black hover:bg-zinc-300 active:bg-zinc-400 active:text-white  w-[2.5rem] h-[2.5rem] rounded-md"
+      className="bg-zinc-500 text-white hover:text-black hover:bg-zinc-300 active:bg-zinc-400 active:text-white w-[2.5rem] h-[2.5rem] rounded-md absolute right-2 -bottom-14 sm:static"
     >
       <FontAwesomeIcon icon={faTrashCan} />
     </button>

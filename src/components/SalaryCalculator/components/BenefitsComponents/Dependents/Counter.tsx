@@ -7,7 +7,7 @@ type CounterProps = {
   setMaxValue: Dispatch<SetStateAction<number>>;
   setCounter: Dispatch<SetStateAction<number>>;
   counter: number;
-  children: string | ReactElement;
+  children: ReactElement;
 };
 
 const Counter = ({

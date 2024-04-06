@@ -1,6 +1,6 @@
 const HouseholdSummary = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-full">
+    <div className="flex flex-col justify-center items-center">
       <h2 className="mt-16 mb-10 font-semibold text-xl">
         Háztartás összesített jövedelme
       </h2>

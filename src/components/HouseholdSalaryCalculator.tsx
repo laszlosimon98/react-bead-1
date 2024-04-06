@@ -6,11 +6,11 @@ import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
 const HouseholdSalaryCalculator = () => {
   return (
     <main className="flex flex-col justify-center items-center w-full mt-24 sm:flex-col md:flex-col lg:flex-row">
-      <div className="bg-zinc-200 rounded-lg relative mb-5 h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] lg:mr-5 lg:mb-0">
+      <div className="bg-zinc-200 rounded-lg relative mb-5 h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] lg:mb-3 lg:mr-5">
         <FamilyMemberTabs />
         <SalaryCalculator />
       </div>
-      <div className="bg-zinc-200 rounded-lg h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem]">
+      <div className="bg-zinc-200 rounded-lg h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] mb-5 lg:mb-3">
         <HouseholdSummary />
       </div>
 
