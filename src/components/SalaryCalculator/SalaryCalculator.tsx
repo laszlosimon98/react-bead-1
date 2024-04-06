@@ -5,15 +5,21 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useMemo } from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {
-  const { selectedMember, calcNetto } = useMemberContext();
+  const { selectedMember, initNetto, updateNetto } = useMemberContext();
+  const bsalary = useMemo(() => selectedMember().bsalary, [selectedMember]);
+  const nsalary = useMemo(() => selectedMember().nsalary, [selectedMember]);
 
   useEffect(() => {
-    calcNetto();
-  }, [selectedMember().bsalary]);
+    initNetto();
+  }, []);
+
+  useEffect(() => {
+    updateNetto();
+  }, [bsalary]);
 
   return (
     <div className="p-5 flex flex-col items-start justify-between h-full sm:relative w-full">
@@ -50,7 +56,7 @@ const SalaryCalculator = (): ReactElement => {
           Számított nettó bér:
         </h3>
         <div className="bg-zinc-700 text-white sm:mt-3 w-[8.5rem] h-12 flex justify-center items-center rounded-lg">
-          {selectedMember().nsalary} Ft
+          {nsalary} Ft
         </div>
       </div>
     </div>

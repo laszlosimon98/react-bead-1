@@ -48,7 +48,8 @@ const initMemberState: MemberType[] = [
 type ContextType = {
   members: MemberType[];
   setMembers: (members: MemberType[]) => void;
-  calcNetto: () => void;
+  initNetto: () => void;
+  updateNetto: () => void;
   selectedMember: () => MemberType;
   handleMember: (button: MemberType) => void;
   handleAddMember: () => void;
@@ -62,31 +63,45 @@ const useHandleContext = (): ContextType => {
     useState<ContextType["members"]>(initMemberState);
 
   const selectedMember = (): MemberType => {
-    const selectedMember = members.find((member) => member.selected);
+    const selectedMember: MemberType | undefined = members.find(
+      (member) => member.selected
+    );
     return selectedMember!;
   };
 
-  const calcNetto = () => {
-    const selected: MemberType = selectedMember();
-    const szja = selected.bsalary * 0.15;
-    const tb = selected.bsalary * 0.185;
+  const initNetto = (): void => {
+    const membersWithNetto: MemberType[] = members.map((member) => ({
+      ...member,
+      nsalary: Math.round(
+        member.bsalary - member.bsalary * 0.15 - member.bsalary * 0.185
+      ),
+    }));
 
-    const newMemberArray = members.map((member) => {
+    setMembers(membersWithNetto);
+  };
+
+  const updateNetto = () => {
+    const selected: MemberType = selectedMember();
+
+    const newMemberArray: MemberType[] = members.map((member) => {
       if (member.id === selected.id) {
         member = {
           ...member,
-          nsalary: Math.round(member.bsalary - szja - tb),
+          nsalary: Math.round(
+            member.bsalary - member.bsalary * 0.15 - member.bsalary * 0.185
+          ),
         };
       }
       return member;
     });
 
     setMembers(newMemberArray);
-    console.log(...members);
   };
 
   const handleMember = (button: MemberType): void => {
-    const selectedBtn = members.find((btn) => btn.name === button.name);
+    const selectedBtn: MemberType | undefined = members.find(
+      (btn) => btn.name === button.name
+    );
     if (!selectedBtn) return;
 
     const result = members.map((btn) => ({
@@ -106,7 +121,7 @@ const useHandleContext = (): ContextType => {
       selected: true,
     };
 
-    const currentMembers = members.map((mem) => ({
+    const currentMembers: MemberType[] = members.map((mem) => ({
       ...mem,
       selected: false,
     }));
@@ -115,10 +130,12 @@ const useHandleContext = (): ContextType => {
   };
 
   const handleDeleteMember = (): void => {
-    const member = members.find((mem) => mem.selected);
+    const member: MemberType | undefined = members.find((mem) => mem.selected);
     if (!member) return;
 
-    const newMembers = members.filter((mem) => mem.id !== member.id);
+    const newMembers: MemberType[] = members.filter(
+      (mem) => mem.id !== member.id
+    );
     if (newMembers[0]) {
       newMembers[0].selected = true;
     } else {
@@ -131,7 +148,8 @@ const useHandleContext = (): ContextType => {
   return {
     members,
     setMembers,
-    calcNetto,
+    initNetto,
+    updateNetto,
     selectedMember,
     handleMember,
     handleAddMember,

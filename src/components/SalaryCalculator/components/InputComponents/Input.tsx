@@ -11,11 +11,16 @@ const Input = ({ title, name, property }: InputProps): ReactElement => {
   const { members, setMembers, selectedMember } = useMemberContext();
 
   const handleInput = (e: FormEvent<HTMLInputElement>) => {
+    const value =
+      name === "ber"
+        ? parseInt(e.currentTarget.value) | 0
+        : e.currentTarget.value;
+
     const newMembersArray = members.map((member) => {
       if (member.id === selectedMember().id) {
         member = {
           ...selectedMember(),
-          [property]: e.currentTarget.value,
+          [property]: value,
         };
       }
       return member;

@@ -1,4 +1,6 @@
 import { ReactElement } from "react";
+import TableContent from "./components/TableContent";
+import Summary from "./components/Summary";
 
 const HouseholdSummary = (): ReactElement => {
   return (
@@ -15,15 +17,14 @@ const HouseholdSummary = (): ReactElement => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="p-2 pl-4">Bendi</td>
-            <td className="p-2 pl-4">100.000 Ft</td>
-          </tr>
+          <TableContent />
         </tbody>
         <tfoot>
           <tr className="border-t-2 border-black">
             <td className="p-2 pl-4">Összesen</td>
-            <td className="p-2 pl-4">100.000 Ft</td>
+            <td className="p-2 pl-4">
+              <Summary />
+            </td>
           </tr>
         </tfoot>
       </table>
