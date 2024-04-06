@@ -10,6 +10,7 @@ export type MemberType = {
   id: number;
   name: string;
   bsalary: number;
+  nsalary: number;
   selected: boolean;
 };
 
@@ -18,24 +19,28 @@ const initMemberState: MemberType[] = [
     id: 1,
     name: "Bendi",
     bsalary: 100000,
+    nsalary: 0,
     selected: true,
   },
   {
     id: 2,
     name: "Laci",
     bsalary: 185000,
+    nsalary: 0,
     selected: false,
   },
   {
     id: 3,
     name: "Lajos",
     bsalary: 230000,
+    nsalary: 0,
     selected: false,
   },
   {
     id: 4,
     name: "Ferenc",
     bsalary: 300000,
+    nsalary: 0,
     selected: false,
   },
 ];
@@ -43,6 +48,7 @@ const initMemberState: MemberType[] = [
 type ContextType = {
   members: MemberType[];
   setMembers: (members: MemberType[]) => void;
+  calcNetto: () => void;
   selectedMember: () => MemberType;
   handleMember: (button: MemberType) => void;
   handleAddMember: () => void;
@@ -57,8 +63,26 @@ const useHandleContext = (): ContextType => {
 
   const selectedMember = (): MemberType => {
     const selectedMember = members.find((member) => member.selected);
-
     return selectedMember!;
+  };
+
+  const calcNetto = () => {
+    const selected: MemberType = selectedMember();
+    const szja = selected.bsalary * 0.15;
+    const tb = selected.bsalary * 0.185;
+
+    const newMemberArray = members.map((member) => {
+      if (member.id === selected.id) {
+        member = {
+          ...member,
+          nsalary: Math.round(member.bsalary - szja - tb),
+        };
+      }
+      return member;
+    });
+
+    setMembers(newMemberArray);
+    console.log(...members);
   };
 
   const handleMember = (button: MemberType): void => {
@@ -78,6 +102,7 @@ const useHandleContext = (): ContextType => {
       id: members.length ? members[members.length - 1].id + 1 : 1,
       name: "Új tag",
       bsalary: 0,
+      nsalary: 0,
       selected: true,
     };
 
@@ -106,6 +131,7 @@ const useHandleContext = (): ContextType => {
   return {
     members,
     setMembers,
+    calcNetto,
     selectedMember,
     handleMember,
     handleAddMember,
