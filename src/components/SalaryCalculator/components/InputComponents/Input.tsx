@@ -1,9 +1,11 @@
+import { ReactElement } from "react";
+
 type InputProps = {
   title: string;
   name: string;
 };
 
-const Input = ({ title, name }: InputProps) => {
+const Input = ({ title, name }: InputProps): ReactElement => {
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="font-semibold mb-1 text-sm">

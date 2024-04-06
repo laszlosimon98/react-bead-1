@@ -1,6 +1,6 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, ReactElement } from "react";
 
-const Slider = () => {
+const Slider = (): ReactElement => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
   };

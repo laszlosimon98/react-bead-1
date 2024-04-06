@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import Counter from "./Counter";
 
-const Dependents = () => {
+const Dependents = (): ReactElement => {
   const [maxValue, setMaxValue] = useState<number>(1);
   const [counter, setCounter] = useState<number>(1);
 

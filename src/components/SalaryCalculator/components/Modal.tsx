@@ -1,4 +1,6 @@
-const Modal = () => {
+import { ReactElement } from "react";
+
+const Modal = (): ReactElement => {
   return (
     <div className="w-[22rem] h-[18rem] sm:w-[30rem] sm:h-[15rem] bg-zinc-100 rounded-lg p-4 z-10 shadow-lg">
       <p className="text-sm opacity-70 mb-5">

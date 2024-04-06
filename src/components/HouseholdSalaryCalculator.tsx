@@ -1,9 +1,10 @@
+import { ReactElement } from "react";
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
 // import Modal from "./SalaryCalculator/components/Modal";
 
-const HouseholdSalaryCalculator = () => {
+const HouseholdSalaryCalculator = (): ReactElement => {
   return (
     <main className="flex flex-col justify-center items-center w-full mt-24 sm:flex-col md:flex-col lg:flex-row">
       <div className="bg-zinc-200 rounded-lg relative mb-5 h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] lg:mb-3 lg:mr-5">

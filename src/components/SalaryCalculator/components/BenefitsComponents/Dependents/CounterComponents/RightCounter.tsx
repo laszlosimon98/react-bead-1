@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import Template from "./Template";
 
 type RightCounterProps = {
@@ -6,7 +6,10 @@ type RightCounterProps = {
   counter: number;
 };
 
-export const RightCounter = ({ counter, maxValue }: RightCounterProps) => {
+export const RightCounter = ({
+  counter,
+  maxValue,
+}: RightCounterProps): ReactElement => {
   const [count, setCount] = useState<number>(1);
 
   useEffect(() => {

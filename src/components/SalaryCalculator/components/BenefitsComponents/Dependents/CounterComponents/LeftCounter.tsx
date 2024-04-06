@@ -1,4 +1,10 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  ReactElement,
+} from "react";
 import Template from "./Template";
 
 type LeftCounterProps = {
@@ -6,7 +12,10 @@ type LeftCounterProps = {
   setMaxValue: Dispatch<SetStateAction<number>>;
 };
 
-export const LeftCounter = ({ setCounter, setMaxValue }: LeftCounterProps) => {
+export const LeftCounter = ({
+  setCounter,
+  setMaxValue,
+}: LeftCounterProps): ReactElement => {
   const [count, setCount] = useState<number>(1);
   const [decreasing, setDecreasing] = useState<boolean>(false);
 

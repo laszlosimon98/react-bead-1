@@ -1,13 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactElement } from "react";
 
 type TemplateProps = {
   handleDecrease: MouseEventHandler<HTMLButtonElement>;
   handleIncrease: MouseEventHandler<HTMLButtonElement>;
   count: number;
 };
-const Template = ({ handleDecrease, handleIncrease, count }: TemplateProps) => {
+const Template = ({
+  handleDecrease,
+  handleIncrease,
+  count,
+}: TemplateProps): ReactElement => {
   return (
     <div className="flex gap-2">
       <button

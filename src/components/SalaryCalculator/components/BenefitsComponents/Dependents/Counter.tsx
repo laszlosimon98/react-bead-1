@@ -16,7 +16,7 @@ const Counter = ({
   setCounter,
   counter,
   children,
-}: CounterProps) => {
+}: CounterProps): ReactElement => {
   return (
     <>
       <LeftCounter setCounter={setCounter} setMaxValue={setMaxValue} />

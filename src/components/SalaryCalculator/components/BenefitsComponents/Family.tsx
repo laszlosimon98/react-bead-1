@@ -1,7 +1,8 @@
+import { ReactElement } from "react";
 import CheckBox from "../InputComponents/CheckBox";
 import Dependents from "./Dependents/Dependents";
 
-const Family = () => {
+const Family = (): ReactElement => {
   return (
     <>
       <CheckBox label="Családi kedvezmény" />

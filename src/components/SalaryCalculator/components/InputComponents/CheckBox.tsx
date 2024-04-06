@@ -1,8 +1,10 @@
+import { ReactElement } from "react";
+
 type CheckBoxProps = {
   label: string;
 };
 
-const CheckBox = ({ label }: CheckBoxProps) => {
+const CheckBox = ({ label }: CheckBoxProps): ReactElement => {
   return (
     <label className="my-1 sm:my-0 inline-flex items-center w-11/12">
       <input type="checkbox" value="" className="sr-only peer" />

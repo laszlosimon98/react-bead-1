@@ -1,6 +1,8 @@
 // import { useState } from "react";
 
-const MarriedDate = () => {
+import { ReactElement } from "react";
+
+const MarriedDate = (): ReactElement => {
   // const [date, setDate] = useState<Date>(new Date());
 
   return (

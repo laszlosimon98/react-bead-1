@@ -1,11 +1,13 @@
-import { MemberType } from "../FamilyMemberTabs";
+import { useMemberContext } from "../../../hooks/useMemberContext";
+import { MemberType } from "../../../context/MembersProvider";
+import { ReactElement } from "react";
 
 type MemberProps = {
   btn: MemberType;
-  handleMember(btn: MemberType): void;
 };
 
-const Member = ({ btn, handleMember }: MemberProps) => {
+const Member = ({ btn }: MemberProps): ReactElement => {
+  const { handleMember } = useMemberContext();
   return (
     <button
       onClick={() => handleMember(btn)}

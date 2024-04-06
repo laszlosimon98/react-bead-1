@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useMemberContext } from "../../../hooks/useMemberContext";
+import { ReactElement } from "react";
 
-type AddButtonProps = {
-  handleAddMember: () => void;
-};
+const AddButton = (): ReactElement => {
+  const { handleAddMember } = useMemberContext();
 
-const AddButton = ({ handleAddMember }: AddButtonProps) => {
   return (
     <button
       onClick={handleAddMember}
