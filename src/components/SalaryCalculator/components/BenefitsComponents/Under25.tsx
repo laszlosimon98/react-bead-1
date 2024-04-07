@@ -1,13 +1,8 @@
-import { Dispatch, ReactElement, SetStateAction, useState } from "react";
+import { ReactElement } from "react";
 import CheckBox from "../InputComponents/CheckBox";
 import { useMemberContext } from "../../../../hooks/useMemberContext";
 
-type Under25Props = {
-  change: boolean;
-  setChange: Dispatch<SetStateAction<boolean>>;
-};
-const Under25 = ({ change, setChange }: Under25Props): ReactElement => {
-  const [status, setStatus] = useState<boolean>(true);
+const Under25 = (): ReactElement => {
   const { members, setMembers, selectedMember } = useMemberContext();
 
   const handleClick = () => {
@@ -15,22 +10,20 @@ const Under25 = ({ change, setChange }: Under25Props): ReactElement => {
       if (member.id === selectedMember().id) {
         member = {
           ...selectedMember(),
-          under25: status,
+          under25: !selectedMember().under25,
         };
       }
       return member;
     });
 
     setMembers(newMembersArray);
-    setChange(!change);
+    console.log(...newMembersArray);
   };
 
   return (
     <>
       <CheckBox
         handleClick={handleClick}
-        status={status}
-        setStatus={setStatus}
         label="25 év alattiak SZJA mentessége"
       />
     </>

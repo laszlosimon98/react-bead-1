@@ -19,7 +19,7 @@ const SalaryCalculator = (): ReactElement => {
   const bsalary = useMemo(() => selectedMember().bsalary, [selectedMember]);
   const nsalary = useMemo(() => selectedMember().nsalary, [selectedMember]);
 
-  const [under25Change, setUnder25Change] = useState<boolean>(false);
+  const { under25 } = selectedMember();
 
   useEffect(() => {
     initNetto();
@@ -27,7 +27,7 @@ const SalaryCalculator = (): ReactElement => {
 
   useLayoutEffect(() => {
     updateNetto();
-  }, [bsalary, under25Change]);
+  }, [bsalary, under25]);
 
   return (
     <div className="p-5 flex flex-col items-start justify-between h-full sm:relative w-full">
@@ -52,7 +52,7 @@ const SalaryCalculator = (): ReactElement => {
 
         <h3 className="font-bold mt-4 mb-2">Kedvezmények</h3>
         <div className="flex flex-col h-36 justify-evenly">
-          <Under25 change={under25Change} setChange={setUnder25Change} />
+          <Under25 />
           <JustMarried />
           <PersonalTax />
           <Family />
