@@ -5,7 +5,7 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import { ReactElement, useEffect, useMemo } from "react";
+import { ReactElement, useLayoutEffect, useEffect, useMemo } from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {
@@ -17,7 +17,7 @@ const SalaryCalculator = (): ReactElement => {
     initNetto();
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     updateNetto();
   }, [bsalary]);
 
