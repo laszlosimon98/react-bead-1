@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement } from "react";
+import { ChangeEvent, ReactElement } from "react";
 import { useMemberContext } from "../../../../hooks/useMemberContext";
 
 type InputProps = {
@@ -10,11 +10,9 @@ type InputProps = {
 const Input = ({ title, name, property }: InputProps): ReactElement => {
   const { members, setMembers, selectedMember } = useMemberContext();
 
-  const handleInput = (e: FormEvent<HTMLInputElement>) => {
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value =
-      name === "ber"
-        ? parseInt(e.currentTarget.value) | 0
-        : e.currentTarget.value;
+      name === "ber" ? parseInt(e.target.value) | 0 : e.currentTarget.value;
 
     const newMembersArray = members.map((member) => {
       if (member.id === selectedMember().id) {

@@ -32,7 +32,7 @@ const SalaryCalculator = (): ReactElement => {
           <Input title="Családtag neve" name="nev" property="name" />
           <Input title="Bruttó bér" name="ber" property="bsalary" />
 
-          <Slider />
+          <Slider property="bsalary" />
 
           <div className="flex w-full justify-center mt-2 items-center">
             <PercentButton value={-1} />
