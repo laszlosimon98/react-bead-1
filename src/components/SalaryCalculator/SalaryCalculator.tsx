@@ -5,7 +5,13 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import { ReactElement, useLayoutEffect, useEffect, useMemo } from "react";
+import {
+  ReactElement,
+  useLayoutEffect,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {
@@ -13,13 +19,15 @@ const SalaryCalculator = (): ReactElement => {
   const bsalary = useMemo(() => selectedMember().bsalary, [selectedMember]);
   const nsalary = useMemo(() => selectedMember().nsalary, [selectedMember]);
 
+  const [under25Change, setUnder25Change] = useState<boolean>(false);
+
   useEffect(() => {
     initNetto();
   }, []);
 
   useLayoutEffect(() => {
     updateNetto();
-  }, [bsalary]);
+  }, [bsalary, under25Change]);
 
   return (
     <div className="p-5 flex flex-col items-start justify-between h-full sm:relative w-full">
@@ -44,7 +52,7 @@ const SalaryCalculator = (): ReactElement => {
 
         <h3 className="font-bold mt-4 mb-2">Kedvezmények</h3>
         <div className="flex flex-col h-36 justify-evenly">
-          <Under25 />
+          <Under25 change={under25Change} setChange={setUnder25Change} />
           <JustMarried />
           <PersonalTax />
           <Family />

@@ -12,6 +12,10 @@ export type MemberType = {
   bsalary: number;
   nsalary: number;
   selected: boolean;
+  under25: boolean;
+  justMarried: boolean;
+  personal: boolean;
+  family: boolean;
 };
 
 const initMemberState: MemberType[] = [
@@ -21,6 +25,10 @@ const initMemberState: MemberType[] = [
     bsalary: 100000,
     nsalary: 0,
     selected: true,
+    under25: false,
+    justMarried: false,
+    personal: false,
+    family: false,
   },
   {
     id: 2,
@@ -28,6 +36,10 @@ const initMemberState: MemberType[] = [
     bsalary: 185000,
     nsalary: 0,
     selected: false,
+    under25: false,
+    justMarried: false,
+    personal: false,
+    family: false,
   },
   {
     id: 3,
@@ -35,6 +47,10 @@ const initMemberState: MemberType[] = [
     bsalary: 230000,
     nsalary: 0,
     selected: false,
+    under25: false,
+    justMarried: false,
+    personal: false,
+    family: false,
   },
   {
     id: 4,
@@ -42,6 +58,10 @@ const initMemberState: MemberType[] = [
     bsalary: 300000,
     nsalary: 0,
     selected: false,
+    under25: false,
+    justMarried: false,
+    personal: false,
+    family: false,
   },
 ];
 
@@ -83,13 +103,22 @@ const useHandleContext = (): ContextType => {
   const updateNetto = () => {
     const selected: MemberType = selectedMember();
 
+    let salary = Math.round(selected.bsalary - selected.bsalary * 0.185);
+
+    if (selected.bsalary > 499952) {
+      salary -= Math.round((selected.bsalary - 499952) * 0.15);
+    }
+
+    if (!selected.under25) {
+      salary -= Math.round(selected.bsalary * 0.15);
+    }
+
+    console.log(salary);
     const newMemberArray: MemberType[] = members.map((member) => {
       if (member.id === selected.id) {
         member = {
           ...member,
-          nsalary: Math.round(
-            member.bsalary - member.bsalary * 0.15 - member.bsalary * 0.185
-          ),
+          nsalary: salary,
         };
       }
       return member;
@@ -119,6 +148,10 @@ const useHandleContext = (): ContextType => {
       bsalary: 0,
       nsalary: 0,
       selected: true,
+      under25: false,
+      justMarried: false,
+      personal: false,
+      family: false,
     };
 
     const currentMembers: MemberType[] = members.map((mem) => ({
