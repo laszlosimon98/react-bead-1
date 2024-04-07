@@ -35,10 +35,10 @@ const SalaryCalculator = (): ReactElement => {
           <Slider property="bsalary" />
 
           <div className="flex w-full justify-center mt-2 items-center">
-            <PercentButton value={-1} />
-            <PercentButton value={-5} />
-            <PercentButton value={1} />
-            <PercentButton value={5} />
+            <PercentButton value={-1} property="bsalary" />
+            <PercentButton value={-5} property="bsalary" />
+            <PercentButton value={1} property="bsalary" />
+            <PercentButton value={5} property="bsalary" />
           </div>
         </div>
 

@@ -23,7 +23,7 @@ const HouseholdSummary = (): ReactElement => {
           <tr className="border-t-2 border-black">
             <td className="p-2 pl-4">Összesen</td>
             <td className="p-2 pl-4">
-              <Summary />
+              <Summary /> Ft
             </td>
           </tr>
         </tfoot>

@@ -9,7 +9,6 @@ const Summary = (): ReactElement => {
       {members.reduce((total, member) => {
         return total + member.nsalary;
       }, 0)}
-      Ft
     </>
   );
 };
