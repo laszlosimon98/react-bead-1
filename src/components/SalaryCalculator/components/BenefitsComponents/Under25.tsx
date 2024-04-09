@@ -17,7 +17,6 @@ const Under25 = (): ReactElement => {
     });
 
     setMembers(newMembersArray);
-    console.log(...newMembersArray);
   };
 
   return (

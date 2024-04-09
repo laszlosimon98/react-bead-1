@@ -70,6 +70,7 @@ type ContextType = {
   setMembers: (members: MemberType[]) => void;
   initNetto: () => void;
   updateNetto: () => void;
+  updateMembers: (property: string, value: number) => MemberType[];
   selectedMember: () => MemberType;
   handleMember: (button: MemberType) => void;
   handleAddMember: () => void;
@@ -125,6 +126,18 @@ const useHandleContext = (): ContextType => {
     });
 
     setMembers(newMemberArray);
+  };
+
+  const updateMembers = (property: string, value: number): MemberType[] => {
+    return members.map((member) => {
+      if (member.id === selectedMember().id) {
+        member = {
+          ...selectedMember(),
+          [property]: value,
+        };
+      }
+      return member;
+    });
   };
 
   const handleMember = (button: MemberType): void => {
@@ -183,6 +196,7 @@ const useHandleContext = (): ContextType => {
     setMembers,
     initNetto,
     updateNetto,
+    updateMembers,
     selectedMember,
     handleMember,
     handleAddMember,

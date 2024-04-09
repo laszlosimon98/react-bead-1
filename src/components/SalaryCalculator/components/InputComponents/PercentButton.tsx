@@ -3,31 +3,17 @@ import { useMemberContext } from "../../../../hooks/useMemberContext";
 
 type PercentButtonProps = {
   value: number;
-  property: string;
 };
 
-const PercentButton = ({
-  value,
-  property,
-}: PercentButtonProps): ReactElement => {
-  const { members, setMembers, selectedMember } = useMemberContext();
+const PercentButton = ({ value }: PercentButtonProps): ReactElement => {
+  const { setMembers, selectedMember, updateMembers } = useMemberContext();
 
   const handleClick = () => {
     const salary =
       selectedMember().bsalary +
       Math.round(selectedMember().bsalary * (value / 100));
 
-    const newMembersArray = members.map((member) => {
-      if (member.id === selectedMember().id) {
-        member = {
-          ...selectedMember(),
-          [property]: salary,
-        };
-      }
-      return member;
-    });
-
-    setMembers(newMembersArray);
+    setMembers(updateMembers("bsalary", salary));
   };
   return (
     <>

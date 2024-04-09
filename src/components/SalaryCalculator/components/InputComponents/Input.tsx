@@ -8,23 +8,13 @@ type InputProps = {
 };
 
 const Input = ({ title, name, property }: InputProps): ReactElement => {
-  const { members, setMembers, selectedMember } = useMemberContext();
+  const { setMembers, selectedMember, updateMembers } = useMemberContext();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value =
-      name === "ber" ? parseInt(e.target.value) | 0 : e.currentTarget.value;
+      name === "ber" ? parseInt(e.target.value) | 0 : parseInt(e.target.value);
 
-    const newMembersArray = members.map((member) => {
-      if (member.id === selectedMember().id) {
-        member = {
-          ...selectedMember(),
-          [property]: value,
-        };
-      }
-      return member;
-    });
-
-    setMembers(newMembersArray);
+    setMembers(updateMembers(property, value));
   };
 
   return (

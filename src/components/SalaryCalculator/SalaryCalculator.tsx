@@ -5,21 +5,12 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import {
-  ReactElement,
-  useLayoutEffect,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { ReactElement, useLayoutEffect, useEffect } from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {
   const { selectedMember, initNetto, updateNetto } = useMemberContext();
-  const bsalary = useMemo(() => selectedMember().bsalary, [selectedMember]);
-  const nsalary = useMemo(() => selectedMember().nsalary, [selectedMember]);
-
-  const { under25 } = selectedMember();
+  const { bsalary, nsalary, under25 } = selectedMember();
 
   useEffect(() => {
     initNetto();
@@ -40,13 +31,13 @@ const SalaryCalculator = (): ReactElement => {
           <Input title="Családtag neve" name="nev" property="name" />
           <Input title="Bruttó bér" name="ber" property="bsalary" />
 
-          <Slider property="bsalary" />
+          <Slider />
 
           <div className="flex w-full justify-center mt-2 items-center">
-            <PercentButton value={-1} property="bsalary" />
-            <PercentButton value={-5} property="bsalary" />
-            <PercentButton value={1} property="bsalary" />
-            <PercentButton value={5} property="bsalary" />
+            <PercentButton value={-1} />
+            <PercentButton value={-5} />
+            <PercentButton value={1} />
+            <PercentButton value={5} />
           </div>
         </div>
 
