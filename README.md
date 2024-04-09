@@ -31,10 +31,10 @@ Tehát léteznek a következő komponensek:
   - Egyedi beviteli komponens, mellyel az kedvezményezett eltartottak és a nem kedvezményezett eltartottak számát tudjuk megadni
   - Friss házasokra megadására vonatkozó komponens.
   - Jogosultság/Nem jogosultság megjelenítésére vonatkozó komponens
--[ ] Az alkalmazásban a komponenseket logikusan, funkciók szerint szétbontva hozta létre, ügyelve a tárgyon elsajátított alapelvekre. (2pt)
+-[x] Az alkalmazásban a komponenseket logikusan, funkciók szerint szétbontva hozta létre, ügyelve a tárgyon elsajátított alapelvekre. (2pt)
 
 - Bérkalkulátor
-  -[ ] Az alkalmazás a bruttó jövedelem megadásakor automatikusan kiszámítja a nettó fizetést, mely az alkalmazás állapotterében tárolódik. Amennyiben megváltozik a bruttó jövedelem, vagy bármilyen azt befolyásoló érték, a nettó jövedelem mindig automatikusan frissüljön.  (2pt)
+  -[x] Az alkalmazás a bruttó jövedelem megadásakor automatikusan kiszámítja a nettó fizetést, mely az alkalmazás állapotterében tárolódik. Amennyiben megváltozik a bruttó jövedelem, vagy bármilyen azt befolyásoló érték, a nettó jövedelem mindig automatikusan frissüljön.  (2pt)
   -[x] A havi bruttó bért egy csúszka segítségével is lehet változtatni, és ilyenkor a nettó bér automatikusan frissül (1pt)
   -[x] A bruttó bért a megadott gombok segítségével (-5%, -1%, +1%, +5%) is tudjuk módosítani, ilyenkor a nettó bér frissül (2pt)
   -[x] A 25 év alattiak SZJA-mentessége esetén a nettó bér jól változik (1pt)

@@ -65,12 +65,14 @@ const initMemberState: MemberType[] = [
   },
 ];
 
+type updateType = number | boolean | string;
+
 type ContextType = {
   members: MemberType[];
   setMembers: (members: MemberType[]) => void;
   initNetto: () => void;
   updateNetto: () => void;
-  updateMembers: (property: string, value: number) => MemberType[];
+  updateMembers: (property: string, value: updateType) => MemberType[];
   selectedMember: () => MemberType;
   handleMember: (button: MemberType) => void;
   handleAddMember: () => void;
@@ -106,7 +108,7 @@ const useHandleContext = (): ContextType => {
 
     let salary = Math.round(selected.bsalary - selected.bsalary * 0.185);
 
-    if (selected.bsalary > 499952) {
+    if (selected.under25 && selected.bsalary > 499952) {
       salary -= Math.round((selected.bsalary - 499952) * 0.15);
     }
 
@@ -114,21 +116,10 @@ const useHandleContext = (): ContextType => {
       salary -= Math.round(selected.bsalary * 0.15);
     }
 
-    console.log(salary);
-    const newMemberArray: MemberType[] = members.map((member) => {
-      if (member.id === selected.id) {
-        member = {
-          ...member,
-          nsalary: salary,
-        };
-      }
-      return member;
-    });
-
-    setMembers(newMemberArray);
+    setMembers(updateMembers("nsalary", salary));
   };
 
-  const updateMembers = (property: string, value: number): MemberType[] => {
+  const updateMembers = (property: string, value: updateType): MemberType[] => {
     return members.map((member) => {
       if (member.id === selectedMember().id) {
         member = {

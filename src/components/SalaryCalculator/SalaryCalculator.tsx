@@ -5,7 +5,7 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import { ReactElement, useLayoutEffect, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {
@@ -13,12 +13,12 @@ const SalaryCalculator = (): ReactElement => {
   const { bsalary, nsalary, under25 } = selectedMember();
 
   useEffect(() => {
-    initNetto();
-  }, []);
-
-  useLayoutEffect(() => {
     updateNetto();
   }, [bsalary, under25]);
+
+  useEffect(() => {
+    initNetto();
+  }, []);
 
   return (
     <div className="p-5 flex flex-col items-start justify-between h-full sm:relative w-full">

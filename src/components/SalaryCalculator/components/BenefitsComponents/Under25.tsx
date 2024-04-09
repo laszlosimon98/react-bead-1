@@ -3,27 +3,18 @@ import CheckBox from "../InputComponents/CheckBox";
 import { useMemberContext } from "../../../../hooks/useMemberContext";
 
 const Under25 = (): ReactElement => {
-  const { members, setMembers, selectedMember } = useMemberContext();
+  const { setMembers, updateMembers, selectedMember } = useMemberContext();
 
   const handleClick = () => {
-    const newMembersArray = members.map((member) => {
-      if (member.id === selectedMember().id) {
-        member = {
-          ...selectedMember(),
-          under25: !selectedMember().under25,
-        };
-      }
-      return member;
-    });
-
-    setMembers(newMembersArray);
+    setMembers(updateMembers("under25", !selectedMember().under25));
   };
 
   return (
     <>
       <CheckBox
-        handleClick={handleClick}
         label="25 év alattiak SZJA mentessége"
+        handleClick={handleClick}
+        checked={selectedMember().under25}
       />
     </>
   );
