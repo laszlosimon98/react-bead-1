@@ -106,15 +106,22 @@ const useHandleContext = (): ContextType => {
   const updateNetto = () => {
     const selected: MemberType = selectedMember();
 
-    let salary = Math.round(selected.bsalary - selected.bsalary * 0.185);
-
-    if (selected.under25 && selected.bsalary > 499952) {
-      salary -= Math.round((selected.bsalary - 499952) * 0.15);
-    }
+    let tax = selected.bsalary * 0.185;
 
     if (!selected.under25) {
-      salary -= Math.round(selected.bsalary * 0.15);
+      tax += selected.bsalary * 0.15;
     }
+
+    if (selected.under25 && selected.bsalary > 499952) {
+      tax += (selected.bsalary - 499952) * 0.15;
+    }
+
+    if (selected.personal) {
+      tax = Math.max(tax - 77300, 0);
+    }
+
+    let salary = selected.justMarried ? 5000 : 0;
+    salary += Math.round(selected.bsalary - tax);
 
     setMembers(updateMembers("nsalary", salary));
   };

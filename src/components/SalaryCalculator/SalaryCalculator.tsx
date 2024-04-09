@@ -10,11 +10,12 @@ import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {
   const { selectedMember, initNetto, updateNetto } = useMemberContext();
-  const { bsalary, nsalary, under25 } = selectedMember();
+  const { bsalary, nsalary, under25, justMarried, personal, family } =
+    selectedMember();
 
   useEffect(() => {
     updateNetto();
-  }, [bsalary, under25]);
+  }, [bsalary, under25, justMarried, personal, family]);
 
   useEffect(() => {
     initNetto();
@@ -42,7 +43,7 @@ const SalaryCalculator = (): ReactElement => {
         </div>
 
         <h3 className="font-bold mt-4 mb-2">Kedvezmények</h3>
-        <div className="flex flex-col h-36 justify-evenly">
+        <div className="flex flex-col h-44 justify-evenly">
           <Under25 />
           <JustMarried />
           <PersonalTax />

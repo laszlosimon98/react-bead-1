@@ -12,7 +12,7 @@ const CheckBox = ({
   checked,
 }: CheckBoxProps): ReactElement => {
   return (
-    <label className="my-1 sm:my-0 inline-flex items-center">
+    <label className="my-1 sm:my-0 flex items-center">
       <input
         type="checkbox"
         checked={checked}

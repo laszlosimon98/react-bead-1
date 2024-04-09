@@ -10,14 +10,14 @@ const Family = (): ReactElement => {
     setMembers(updateMembers("family", !selectedMember().family));
   };
   return (
-    <>
+    <div className="h-14 flex flex-col justify-between">
       <CheckBox
         label="Családi kedvezmény"
         handleClick={handleClick}
         checked={selectedMember().family}
       />
-      <Dependents />
-    </>
+      {selectedMember().family && <Dependents />}
+    </div>
   );
 };
 

@@ -12,7 +12,7 @@ const Input = ({ title, name, property }: InputProps): ReactElement => {
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value =
-      name === "ber" ? parseInt(e.target.value) | 0 : parseInt(e.target.value);
+      name === "ber" ? parseInt(e.target.value) | 0 : e.target.value;
 
     setMembers(updateMembers(property, value));
   };
