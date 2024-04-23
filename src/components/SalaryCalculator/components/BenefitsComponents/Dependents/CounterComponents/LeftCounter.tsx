@@ -1,41 +1,18 @@
-import {
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-  ReactElement,
-} from "react";
+import { ReactElement } from "react";
 import Template from "./Template";
+import { useMemberContext } from "../../../../../../hooks/useMemberContext";
 
-type LeftCounterProps = {
-  setCounter: Dispatch<SetStateAction<number>>;
-  setMaxValue: Dispatch<SetStateAction<number>>;
-};
-
-export const LeftCounter = ({
-  setCounter,
-  setMaxValue,
-}: LeftCounterProps): ReactElement => {
-  const [count, setCount] = useState<number>(1);
-  const [decreasing, setDecreasing] = useState<boolean>(false);
-
-  useEffect(() => {
-    setMaxValue(count);
-  }, [count, setMaxValue]);
-
-  useEffect(() => {
-    setCounter(count);
-  }, [decreasing, setCounter]);
+export const LeftCounter = (): ReactElement => {
+  const { setMembers, updateMembers, selectedMember } = useMemberContext();
 
   const handleDecrease = () => {
-    if (count > 1) setCount(count - 1);
-    if (count <= 3) {
-      setDecreasing(!decreasing);
+    if (selectedMember().dependents > 1) {
+      setMembers(updateMembers("dependents", selectedMember().dependents - 1));
     }
   };
 
   const handleIncrease = () => {
-    setCount(count + 1);
+    setMembers(updateMembers("dependents", selectedMember().dependents + 1));
   };
 
   return (
@@ -43,7 +20,7 @@ export const LeftCounter = ({
       <Template
         handleDecrease={handleDecrease}
         handleIncrease={handleIncrease}
-        count={count}
+        count={selectedMember().dependents}
       />
     </>
   );

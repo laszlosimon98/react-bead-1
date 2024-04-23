@@ -1,4 +1,4 @@
-import { Dispatch, ReactElement, SetStateAction, useState } from "react";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 import CheckBox from "../InputComponents/CheckBox";
 import Entitled from "./MarriedComponents/Entitled";
 import MarriedDate from "./MarriedComponents/MarriedDate";
@@ -14,6 +14,7 @@ const JustMarried = ({ setIsModalVisible }: JustMarriedProps): ReactElement => {
   const handleClick = () => {
     setMembers(updateMembers("justMarried", !selectedMember().justMarried));
   };
+
   return (
     <div className="flex flex-col sm:flex-row w-full">
       <CheckBox

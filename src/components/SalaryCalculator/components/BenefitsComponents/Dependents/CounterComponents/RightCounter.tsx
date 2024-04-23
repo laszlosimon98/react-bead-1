@@ -1,38 +1,49 @@
-import { useState, useEffect, ReactElement } from "react";
+import { ReactElement, useCallback, useEffect } from "react";
 import Template from "./Template";
+import { useMemberContext } from "../../../../../../hooks/useMemberContext";
 
-type RightCounterProps = {
-  maxValue: number;
-  counter: number;
-};
-
-export const RightCounter = ({
-  counter,
-  maxValue,
-}: RightCounterProps): ReactElement => {
-  const [count, setCount] = useState<number>(1);
+export const RightCounter = (): ReactElement => {
+  const { setMembers, updateMembers, selectedMember } = useMemberContext();
 
   useEffect(() => {
-    setCount(counter);
-  }, [counter]);
+    if (selectedMember().dependents < selectedMember().beneficiaryDependents) {
+      setMembers(
+        updateMembers("beneficiaryDependents", selectedMember().dependents)
+      );
+    }
+  }, [selectedMember().dependents]);
 
   const handleDecrease = () => {
-    if (count > 1) {
-      setCount(count - 1);
+    if (selectedMember().beneficiaryDependents > 1) {
+      setMembers(
+        updateMembers(
+          "beneficiaryDependents",
+          selectedMember().beneficiaryDependents - 1
+        )
+      );
     }
   };
 
   const handleIncrease = () => {
-    if (count < 3 && count < maxValue) {
-      setCount((count) => count + 1);
+    if (
+      selectedMember().beneficiaryDependents <
+      Math.min(selectedMember().dependents, 3)
+    ) {
+      setMembers(
+        updateMembers(
+          "beneficiaryDependents",
+          selectedMember().beneficiaryDependents + 1
+        )
+      );
     }
   };
+
   return (
     <>
       <Template
         handleDecrease={handleDecrease}
         handleIncrease={handleIncrease}
-        count={count}
+        count={selectedMember().beneficiaryDependents}
       />
     </>
   );

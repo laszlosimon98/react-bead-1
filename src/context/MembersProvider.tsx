@@ -5,69 +5,7 @@ import {
   useState,
 } from "react";
 
-export type MemberType = {
-  [key: string]: string | number | boolean;
-  id: number;
-  name: string;
-  bsalary: number;
-  nsalary: number;
-  selected: boolean;
-  under25: boolean;
-  justMarried: boolean;
-  personal: boolean;
-  family: boolean;
-  marriedDate: string;
-  isEntitled: boolean;
-};
-
-const initMemberState: MemberType[] = [
-  {
-    id: 1,
-    name: "Bendi",
-    bsalary: 100000,
-    nsalary: 0,
-    selected: true,
-    under25: false,
-    justMarried: false,
-    personal: false,
-    family: false,
-    marriedDate: "",
-    isEntitled: false,
-  },
-  // {
-  //   id: 2,
-  //   name: "Laci",
-  //   bsalary: 185000,
-  //   nsalary: 0,
-  //   selected: false,
-  //   under25: false,
-  //   justMarried: false,
-  //   personal: false,
-  //   family: false,
-  // },
-  // {
-  //   id: 3,
-  //   name: "Lajos",
-  //   bsalary: 230000,
-  //   nsalary: 0,
-  //   selected: false,
-  //   under25: false,
-  //   justMarried: false,
-  //   personal: false,
-  //   family: false,
-  // },
-  // {
-  //   id: 4,
-  //   name: "Ferenc",
-  //   bsalary: 300000,
-  //   nsalary: 0,
-  //   selected: false,
-  //   under25: false,
-  //   justMarried: false,
-  //   personal: false,
-  //   family: false,
-  // },
-];
+import { MemberType, initMemberState } from "../data/exampleData";
 
 type updateType = number | boolean | string;
 
@@ -124,8 +62,22 @@ const useHandleContext = (): ContextType => {
       tax = Math.max(tax - 77300, 0);
     }
 
-    let salary = selected.justMarried && selected.isEntitled ? 5000 : 0;
-    salary += Math.round(selected.bsalary - tax);
+    let salary = Math.round(selected.bsalary - tax);
+
+    if (selected.family) {
+      const amount: number =
+        selected.beneficiaryDependents === 1
+          ? 10000
+          : selected.beneficiaryDependents === 2
+          ? 20000
+          : 30000;
+
+      salary += amount * selected.dependents;
+    }
+
+    if (selected.justMarried && selected.isEntitled) {
+      salary += 5000;
+    }
 
     setMembers(updateMembers("nsalary", salary));
   };
@@ -144,13 +96,13 @@ const useHandleContext = (): ContextType => {
 
   const handleMember = (button: MemberType): void => {
     const selectedBtn: MemberType | undefined = members.find(
-      (btn) => btn.name === button.name
+      (btn) => btn.id === button.id
     );
     if (!selectedBtn) return;
 
     const result = members.map((btn) => ({
       ...btn,
-      selected: btn.name === selectedBtn.name,
+      selected: btn.id === selectedBtn.id,
     }));
 
     setMembers(result);
@@ -169,6 +121,8 @@ const useHandleContext = (): ContextType => {
       family: false,
       marriedDate: "",
       isEntitled: false,
+      dependents: 1,
+      beneficiaryDependents: 1,
     };
 
     const currentMembers: MemberType[] = members.map((mem) => ({

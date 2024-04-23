@@ -24,11 +24,22 @@ const SalaryCalculator = ({
     personal,
     family,
     isEntitled,
+    dependents,
+    beneficiaryDependents,
   } = selectedMember();
 
   useEffect(() => {
     updateNetto();
-  }, [bsalary, under25, justMarried, personal, family, isEntitled]);
+  }, [
+    bsalary,
+    under25,
+    justMarried,
+    personal,
+    family,
+    isEntitled,
+    dependents,
+    beneficiaryDependents,
+  ]);
 
   useEffect(() => {
     initNetto();
