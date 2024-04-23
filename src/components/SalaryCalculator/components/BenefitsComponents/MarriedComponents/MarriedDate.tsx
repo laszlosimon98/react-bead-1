@@ -1,12 +1,19 @@
-// import { useState } from "react";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 
-import { ReactElement } from "react";
+type MarriedDateProps = {
+  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
+};
 
-const MarriedDate = (): ReactElement => {
-  // const [date, setDate] = useState<Date>(new Date());
+const MarriedDate = ({ setIsModalVisible }: MarriedDateProps): ReactElement => {
+  const handleModalVisible = () => {
+    setIsModalVisible(true);
+  };
 
   return (
-    <button className="bg-zinc-700 cursor-pointer hover:bg-zinc-800 text-white text-sm w-[9rem] flex justify-center items-center rounded-md">
+    <button
+      onClick={handleModalVisible}
+      className="bg-zinc-700 cursor-pointer hover:bg-zinc-800 text-white text-sm w-[9rem] flex justify-center items-center rounded-md"
+    >
       Dátum hozzáadása
     </button>
   );

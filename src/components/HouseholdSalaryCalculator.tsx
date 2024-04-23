@@ -1,12 +1,13 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
 import { useMemberContext } from "../hooks/useMemberContext";
-// import Modal from "./SalaryCalculator/components/Modal";
+import Modal from "./SalaryCalculator/components/Modal";
 
 const HouseholdSalaryCalculator = (): ReactElement => {
   const { members } = useMemberContext();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   return (
     <main className="flex flex-col justify-center items-center w-full mt-24 sm:flex-col md:flex-col lg:flex-row">
@@ -14,7 +15,7 @@ const HouseholdSalaryCalculator = (): ReactElement => {
         <FamilyMemberTabs />
         {members.length ? (
           <>
-            <SalaryCalculator />
+            <SalaryCalculator setIsModalVisible={setIsModalVisible} />
           </>
         ) : (
           <p className="flex justify-center items-center h-full text-2xl text-red-600">
@@ -26,11 +27,13 @@ const HouseholdSalaryCalculator = (): ReactElement => {
         {members.length ? <HouseholdSummary /> : ""}
       </div>
 
-      {/* <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50">
-        <div className="flex justify-center items-center w-full h-screen">
-          <Modal />
+      {isModalVisible && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50">
+          <div className="flex justify-center items-center w-full h-screen">
+            <Modal setIsModalVisible={setIsModalVisible} />
+          </div>
         </div>
-      </div> */}
+      )}
     </main>
   );
 };

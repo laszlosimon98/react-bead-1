@@ -5,17 +5,30 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import { ReactElement, useEffect } from "react";
+import { Dispatch, ReactElement, SetStateAction, useEffect } from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
-const SalaryCalculator = (): ReactElement => {
+type SalaryCalculatorProps = {
+  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
+};
+
+const SalaryCalculator = ({
+  setIsModalVisible,
+}: SalaryCalculatorProps): ReactElement => {
   const { selectedMember, initNetto, updateNetto } = useMemberContext();
-  const { bsalary, nsalary, under25, justMarried, personal, family } =
-    selectedMember();
+  const {
+    bsalary,
+    nsalary,
+    under25,
+    justMarried,
+    personal,
+    family,
+    isEntitled,
+  } = selectedMember();
 
   useEffect(() => {
     updateNetto();
-  }, [bsalary, under25, justMarried, personal, family]);
+  }, [bsalary, under25, justMarried, personal, family, isEntitled]);
 
   useEffect(() => {
     initNetto();
@@ -45,7 +58,7 @@ const SalaryCalculator = (): ReactElement => {
         <h3 className="font-bold mt-4 mb-2">Kedvezmények</h3>
         <div className="flex flex-col h-44 justify-evenly">
           <Under25 />
-          <JustMarried />
+          <JustMarried setIsModalVisible={setIsModalVisible} />
           <PersonalTax />
           <Family />
         </div>

@@ -16,6 +16,8 @@ export type MemberType = {
   justMarried: boolean;
   personal: boolean;
   family: boolean;
+  marriedDate: string;
+  isEntitled: boolean;
 };
 
 const initMemberState: MemberType[] = [
@@ -29,40 +31,42 @@ const initMemberState: MemberType[] = [
     justMarried: false,
     personal: false,
     family: false,
+    marriedDate: "",
+    isEntitled: false,
   },
-  {
-    id: 2,
-    name: "Laci",
-    bsalary: 185000,
-    nsalary: 0,
-    selected: false,
-    under25: false,
-    justMarried: false,
-    personal: false,
-    family: false,
-  },
-  {
-    id: 3,
-    name: "Lajos",
-    bsalary: 230000,
-    nsalary: 0,
-    selected: false,
-    under25: false,
-    justMarried: false,
-    personal: false,
-    family: false,
-  },
-  {
-    id: 4,
-    name: "Ferenc",
-    bsalary: 300000,
-    nsalary: 0,
-    selected: false,
-    under25: false,
-    justMarried: false,
-    personal: false,
-    family: false,
-  },
+  // {
+  //   id: 2,
+  //   name: "Laci",
+  //   bsalary: 185000,
+  //   nsalary: 0,
+  //   selected: false,
+  //   under25: false,
+  //   justMarried: false,
+  //   personal: false,
+  //   family: false,
+  // },
+  // {
+  //   id: 3,
+  //   name: "Lajos",
+  //   bsalary: 230000,
+  //   nsalary: 0,
+  //   selected: false,
+  //   under25: false,
+  //   justMarried: false,
+  //   personal: false,
+  //   family: false,
+  // },
+  // {
+  //   id: 4,
+  //   name: "Ferenc",
+  //   bsalary: 300000,
+  //   nsalary: 0,
+  //   selected: false,
+  //   under25: false,
+  //   justMarried: false,
+  //   personal: false,
+  //   family: false,
+  // },
 ];
 
 type updateType = number | boolean | string;
@@ -120,7 +124,7 @@ const useHandleContext = (): ContextType => {
       tax = Math.max(tax - 77300, 0);
     }
 
-    let salary = selected.justMarried ? 5000 : 0;
+    let salary = selected.justMarried && selected.isEntitled ? 5000 : 0;
     salary += Math.round(selected.bsalary - tax);
 
     setMembers(updateMembers("nsalary", salary));
@@ -163,6 +167,8 @@ const useHandleContext = (): ContextType => {
       justMarried: false,
       personal: false,
       family: false,
+      marriedDate: "",
+      isEntitled: false,
     };
 
     const currentMembers: MemberType[] = members.map((mem) => ({
