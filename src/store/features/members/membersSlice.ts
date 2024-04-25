@@ -25,6 +25,7 @@ export const membersSlice = createSlice({
   initialState,
   reducers: {
     selectMember: (state, action: PayloadAction<MemberState>) => {
+      console.log("called");
       return state.map((member) => ({
         ...member,
         selected: member.id === action.payload.id,
@@ -54,9 +55,22 @@ export const membersSlice = createSlice({
 
       return [...resetState, newMember];
     },
+    deleteMember: (state) => {
+      let remainingMembers = state.filter((member) => !member.selected);
+
+      if (remainingMembers) {
+        const firstMember = {
+          ...remainingMembers[0],
+          selected: true,
+        };
+
+        remainingMembers = [firstMember, ...remainingMembers.slice(1)];
+      }
+      return remainingMembers;
+    },
   },
 });
 
-export const { selectMember, addMember } = membersSlice.actions;
+export const { selectMember, addMember, deleteMember } = membersSlice.actions;
 
 export default membersSlice.reducer;
