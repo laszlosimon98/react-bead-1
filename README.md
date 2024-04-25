@@ -53,7 +53,7 @@ Tehát léteznek a következő komponensek:
 -[x] Igényes megjelenés (2pt)
 
 - Plusz pontok:
-  -[ ] LocalStorage: A háztartásban élő személyeket, és a hozzájuk tartozó adatokat LocalStorage-ba mentjük. Ha ide el van mentve már egy háztartáshoz tartozó adatcsomag, az ő adataikkal fog az alkalmazásunk megjelenni. Ehhez készíts egy saját Hook-ot, amivel a LocalStorage-ba el tudod menteni az értékeket. (3 pont)
+  -[x] LocalStorage: A háztartásban élő személyeket, és a hozzájuk tartozó adatokat LocalStorage-ba mentjük. Ha ide el van mentve már egy háztartáshoz tartozó adatcsomag, az ő adataikkal fog az alkalmazásunk megjelenni. Ehhez készíts egy saját Hook-ot, amivel a LocalStorage-ba el tudod menteni az értékeket. (3 pont)
   -[x] Felugró ablak: Készíts egy felugró ablakot (Modal), amivel a friss házasokra vonatkozó házasságkötés dátumát meg tudjuk adni! (2 pont)
 
 

@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import { MemberType, initMemberState } from "../data/exampleData";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 type updateType = number | boolean | string;
 
@@ -24,13 +25,18 @@ type ContextType = {
 export const MemberContext = createContext<ContextType | undefined>(undefined);
 
 const useHandleContext = (): ContextType => {
-  const [members, setMembers] =
-    useState<ContextType["members"]>(initMemberState);
+  const membersStorage = useLocalStorage("members");
+
+  const [members, setMembers] = useState<ContextType["members"]>(
+    membersStorage.loadMembers() || initMemberState
+  );
 
   const selectedMember = (): MemberType => {
     const selectedMember: MemberType | undefined = members.find(
       (member) => member.selected
     );
+
+    membersStorage.saveMembers(members);
     return selectedMember!;
   };
 
@@ -43,6 +49,7 @@ const useHandleContext = (): ContextType => {
     }));
 
     setMembers(membersWithNetto);
+    membersStorage.saveMembers(members);
   };
 
   const updateNetto = () => {
@@ -80,6 +87,7 @@ const useHandleContext = (): ContextType => {
     }
 
     setMembers(updateMembers("nsalary", salary));
+    membersStorage.saveMembers(members);
   };
 
   const updateMembers = (property: string, value: updateType): MemberType[] => {
@@ -90,6 +98,7 @@ const useHandleContext = (): ContextType => {
           [property]: value,
         };
       }
+      membersStorage.saveMembers(members);
       return member;
     });
   };
@@ -106,6 +115,7 @@ const useHandleContext = (): ContextType => {
     }));
 
     setMembers(result);
+    membersStorage.saveMembers(members);
   };
 
   const handleAddMember = (): void => {
@@ -131,6 +141,7 @@ const useHandleContext = (): ContextType => {
     }));
 
     setMembers([...currentMembers, newMember]);
+    membersStorage.saveMembers(members);
   };
 
   const handleDeleteMember = (): void => {
@@ -147,6 +158,7 @@ const useHandleContext = (): ContextType => {
     }
 
     setMembers([...newMembers]);
+    membersStorage.saveMembers(members);
   };
 
   return {
