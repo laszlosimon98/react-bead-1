@@ -43,9 +43,7 @@ const useHandleContext = (): ContextType => {
   const initNetto = (): void => {
     const membersWithNetto: MemberType[] = members.map((member) => ({
       ...member,
-      nsalary: Math.round(
-        member.bsalary - member.bsalary * 0.15 - member.bsalary * 0.185
-      ),
+      nsalary: calcSalary(member),
     }));
 
     setMembers(membersWithNetto);
@@ -54,7 +52,13 @@ const useHandleContext = (): ContextType => {
 
   const updateNetto = () => {
     const selected: MemberType = selectedMember();
+    const salary = calcSalary(selected);
 
+    setMembers(updateMembers("nsalary", salary));
+    membersStorage.saveMembers(members);
+  };
+
+  const calcSalary = (selected: MemberType): number => {
     let tax = selected.bsalary * 0.185;
 
     if (!selected.under25) {
@@ -86,8 +90,7 @@ const useHandleContext = (): ContextType => {
       salary += 5000;
     }
 
-    setMembers(updateMembers("nsalary", salary));
-    membersStorage.saveMembers(members);
+    return salary;
   };
 
   const updateMembers = (property: string, value: updateType): MemberType[] => {
