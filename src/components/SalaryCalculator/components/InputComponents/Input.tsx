@@ -5,14 +5,20 @@ type InputProps = {
   title: string;
   name: string;
   property: string;
+  inputType: "text" | "number";
 };
 
-const Input = ({ title, name, property }: InputProps): ReactElement => {
+const Input = ({
+  title,
+  name,
+  property,
+  inputType,
+}: InputProps): ReactElement => {
   const { setMembers, selectedMember, updateMembers } = useMemberContext();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value =
-      name === "ber" ? parseInt(e.target.value) | 0 : e.target.value;
+      inputType === "number" ? parseInt(e.target.value) | 0 : e.target.value;
 
     setMembers(updateMembers(property, value));
   };
@@ -23,7 +29,7 @@ const Input = ({ title, name, property }: InputProps): ReactElement => {
         {title}
       </label>
       <input
-        className="rounded-md w-full sm:w-[25rem] md:w-[30rem] lg:w-[25rem] py-1 px-2 shadow-md"
+        className="rounded-md w-full sm:w-[25rem] md:w-[30rem] lg:w-[25rem] py-1 px-2 shadow-lg"
         type="text"
         name={name}
         id={name}

@@ -1,5 +1,5 @@
+import { MemberType } from "../../../data/exampleData";
 import { useMemberContext } from "../../../hooks/useMemberContext";
-import { MemberType } from "../../../context/MembersProvider";
 import { ReactElement } from "react";
 
 type MemberProps = {

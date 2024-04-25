@@ -53,8 +53,18 @@ const SalaryCalculator = ({
             {selectedMember().name} Bérének kiszámítása
           </h2>
 
-          <Input title="Családtag neve" name="nev" property="name" />
-          <Input title="Bruttó bér" name="ber" property="bsalary" />
+          <Input
+            title="Családtag neve"
+            name="nev"
+            property="name"
+            inputType="text"
+          />
+          <Input
+            title="Bruttó bér"
+            name="ber"
+            property="bsalary"
+            inputType="number"
+          />
 
           <Slider />
 

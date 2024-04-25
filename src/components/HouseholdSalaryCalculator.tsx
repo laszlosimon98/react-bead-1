@@ -11,7 +11,7 @@ const HouseholdSalaryCalculator = (): ReactElement => {
 
   return (
     <main className="flex flex-col justify-center items-center w-full mt-24 sm:flex-col md:flex-col lg:flex-row">
-      <div className="bg-zinc-200 rounded-lg shadow-lg relative mb-5 h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] lg:mb-3 lg:mr-5">
+      <div className="bg-zinc-200 rounded-lg shadow-xl relative mb-5 h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] lg:mb-3 lg:mr-5">
         <FamilyMemberTabs />
         {members.length ? (
           <>
@@ -23,7 +23,7 @@ const HouseholdSalaryCalculator = (): ReactElement => {
           </p>
         )}
       </div>
-      <div className="bg-zinc-200 rounded-lg shadow-lg h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] mb-5 lg:mb-3">
+      <div className="bg-zinc-200 rounded-lg shadow-xl h-[40rem] w-[22rem] sm:w-[38rem] md:w-[45rem] lg:w-[35rem] mb-5 lg:mb-3">
         {members.length ? <HouseholdSummary /> : ""}
       </div>
 
