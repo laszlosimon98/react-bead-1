@@ -1,15 +1,15 @@
-import { MemberState } from "../../../data/exampleData";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
-import { useMemberContext } from "../../../hooks/useMemberContext";
 import { ReactElement } from "react";
-import { selectMember } from "../../../store/features/member/membersSlice";
+import {
+  MemberState,
+  selectMember,
+} from "../../../store/features/members/membersSlice";
 
 type MemberProps = {
   member: MemberState;
 };
 
 const Member = ({ member }: MemberProps): ReactElement => {
-  const { handleMember } = useMemberContext();
   const dispatch = useAppDispatch();
 
   return (

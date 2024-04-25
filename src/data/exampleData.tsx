@@ -1,19 +1,4 @@
-export type MemberState = {
-  [key: string]: string | number | boolean;
-  id: number;
-  name: string;
-  bsalary: number;
-  nsalary: number;
-  selected: boolean;
-  under25: boolean;
-  justMarried: boolean;
-  personal: boolean;
-  family: boolean;
-  marriedDate: string;
-  isEntitled: boolean;
-  dependents: number;
-  beneficiaryDependents: number;
-};
+import { MemberState } from "../store/features/members/membersSlice";
 
 export const initMemberState: MemberState[] = [
   {

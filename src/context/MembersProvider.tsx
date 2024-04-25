@@ -5,7 +5,8 @@ import {
   useState,
 } from "react";
 
-import { MemberState, initMemberState } from "../data/exampleData";
+import { MemberState } from "../store/features/members/membersSlice";
+import { initMemberState } from "../data/exampleData";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 type updateType = number | boolean | string;
