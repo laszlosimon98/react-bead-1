@@ -1,4 +1,4 @@
-export type MemberType = {
+export type MemberState = {
   [key: string]: string | number | boolean;
   id: number;
   name: string;
@@ -15,7 +15,7 @@ export type MemberType = {
   beneficiaryDependents: number;
 };
 
-export const initMemberState: MemberType[] = [
+export const initMemberState: MemberState[] = [
   {
     id: 1,
     name: "Teszt Elek",

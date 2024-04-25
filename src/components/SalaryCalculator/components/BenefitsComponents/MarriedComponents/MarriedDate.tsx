@@ -1,12 +1,12 @@
 import { ReactElement } from "react";
-import { activate } from "../../../../../store/features/modal/modalSlice";
+import { openModal } from "../../../../../store/features/modal/modalSlice";
 import { useAppDispatch } from "../../../../../hooks/reduxHooks";
 
 const MarriedDate = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const handleModalVisible = () => {
-    dispatch(activate());
+    dispatch(openModal());
   };
 
   return (

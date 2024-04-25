@@ -5,19 +5,19 @@ import {
   useState,
 } from "react";
 
-import { MemberType, initMemberState } from "../data/exampleData";
+import { MemberState, initMemberState } from "../data/exampleData";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 type updateType = number | boolean | string;
 
 type ContextType = {
-  members: MemberType[];
-  setMembers: (members: MemberType[]) => void;
+  members: MemberState[];
+  setMembers: (members: MemberState[]) => void;
   initNetto: () => void;
   updateNetto: () => void;
-  updateMembers: (property: string, value: updateType) => MemberType[];
-  selectedMember: () => MemberType;
-  handleMember: (button: MemberType) => void;
+  updateMembers: (property: string, value: updateType) => MemberState[];
+  selectedMember: () => MemberState;
+  handleMember: (button: MemberState) => void;
   handleAddMember: () => void;
   handleDeleteMember: () => void;
 };
@@ -31,8 +31,8 @@ const useHandleContext = (): ContextType => {
     membersStorage.loadMembers() || initMemberState
   );
 
-  const selectedMember = (): MemberType => {
-    const selectedMember: MemberType | undefined = members.find(
+  const selectedMember = (): MemberState => {
+    const selectedMember: MemberState | undefined = members.find(
       (member) => member.selected
     );
 
@@ -41,7 +41,7 @@ const useHandleContext = (): ContextType => {
   };
 
   const initNetto = (): void => {
-    const membersWithNetto: MemberType[] = members.map((member) => ({
+    const membersWithNetto: MemberState[] = members.map((member) => ({
       ...member,
       nsalary: calcSalary(member),
     }));
@@ -51,14 +51,14 @@ const useHandleContext = (): ContextType => {
   };
 
   const updateNetto = () => {
-    const selected: MemberType = selectedMember();
+    const selected: MemberState = selectedMember();
     const salary = calcSalary(selected);
 
     setMembers(updateMembers("nsalary", salary));
     membersStorage.saveMembers(members);
   };
 
-  const calcSalary = (selected: MemberType): number => {
+  const calcSalary = (selected: MemberState): number => {
     let tax = selected.bsalary * 0.185;
 
     if (!selected.under25) {
@@ -93,7 +93,10 @@ const useHandleContext = (): ContextType => {
     return salary;
   };
 
-  const updateMembers = (property: string, value: updateType): MemberType[] => {
+  const updateMembers = (
+    property: string,
+    value: updateType
+  ): MemberState[] => {
     return members.map((member) => {
       if (member.id === selectedMember().id) {
         member = {
@@ -106,8 +109,8 @@ const useHandleContext = (): ContextType => {
     });
   };
 
-  const handleMember = (button: MemberType): void => {
-    const selectedBtn: MemberType | undefined = members.find(
+  const handleMember = (button: MemberState): void => {
+    const selectedBtn: MemberState | undefined = members.find(
       (btn) => btn.id === button.id
     );
     if (!selectedBtn) return;
@@ -122,7 +125,7 @@ const useHandleContext = (): ContextType => {
   };
 
   const handleAddMember = (): void => {
-    const newMember: MemberType = {
+    const newMember: MemberState = {
       id: members.length ? members[members.length - 1].id + 1 : 1,
       name: "Új tag",
       bsalary: 0,
@@ -138,7 +141,7 @@ const useHandleContext = (): ContextType => {
       beneficiaryDependents: 1,
     };
 
-    const currentMembers: MemberType[] = members.map((mem) => ({
+    const currentMembers: MemberState[] = members.map((mem) => ({
       ...mem,
       selected: false,
     }));
@@ -148,10 +151,10 @@ const useHandleContext = (): ContextType => {
   };
 
   const handleDeleteMember = (): void => {
-    const member: MemberType | undefined = members.find((mem) => mem.selected);
+    const member: MemberState | undefined = members.find((mem) => mem.selected);
     if (!member) return;
 
-    const newMembers: MemberType[] = members.filter(
+    const newMembers: MemberState[] = members.filter(
       (mem) => mem.id !== member.id
     );
     if (newMembers[0]) {

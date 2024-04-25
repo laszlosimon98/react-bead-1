@@ -5,7 +5,7 @@ import PercentButton from "./components/InputComponents/PercentButton";
 import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
-import { Dispatch, ReactElement, SetStateAction, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
 const SalaryCalculator = (): ReactElement => {

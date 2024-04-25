@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";

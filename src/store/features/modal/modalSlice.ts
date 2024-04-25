@@ -12,15 +12,15 @@ export const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    activate: (state) => {
+    openModal: (state) => {
       state.isVisible = true;
     },
-    deactivate: (state) => {
+    closeModal: (state) => {
       state.isVisible = false;
     },
   },
 });
 
-export const { activate, deactivate } = modalSlice.actions;
+export const { openModal, closeModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -1,7 +1,7 @@
 import { ChangeEvent, ReactElement } from "react";
 import { useMemberContext } from "../../../hooks/useMemberContext";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
-import { deactivate } from "../../../store/features/modal/modalSlice";
+import { closeModal } from "../../../store/features/modal/modalSlice";
 
 const Modal = (): ReactElement => {
   const { setMembers, selectedMember, updateMembers } = useMemberContext();
@@ -12,7 +12,7 @@ const Modal = (): ReactElement => {
   };
 
   const handleClose = () => {
-    dispatch(deactivate());
+    dispatch(closeModal());
   };
 
   const handleSave = () => {
