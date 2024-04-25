@@ -1,19 +1,18 @@
-import { ChangeEvent, Dispatch, ReactElement, SetStateAction } from "react";
+import { ChangeEvent, ReactElement } from "react";
 import { useMemberContext } from "../../../hooks/useMemberContext";
+import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { deactivate } from "../../../store/features/modal/modalSlice";
 
-type ModalProps = {
-  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
-};
-
-const Modal = ({ setIsModalVisible }: ModalProps): ReactElement => {
+const Modal = (): ReactElement => {
   const { setMembers, selectedMember, updateMembers } = useMemberContext();
+  const dispatch = useAppDispatch();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setMembers(updateMembers("marriedDate", e.target.value));
   };
 
   const handleClose = () => {
-    setIsModalVisible(false);
+    dispatch(deactivate());
   };
 
   const handleSave = () => {

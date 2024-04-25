@@ -8,13 +8,7 @@ import Under25 from "./components/BenefitsComponents/Under25";
 import { Dispatch, ReactElement, SetStateAction, useEffect } from "react";
 import { useMemberContext } from "../../hooks/useMemberContext";
 
-type SalaryCalculatorProps = {
-  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
-};
-
-const SalaryCalculator = ({
-  setIsModalVisible,
-}: SalaryCalculatorProps): ReactElement => {
+const SalaryCalculator = (): ReactElement => {
   const { selectedMember, initNetto, updateNetto } = useMemberContext();
   const {
     bsalary,
@@ -79,7 +73,7 @@ const SalaryCalculator = ({
         <h3 className="font-bold mt-4 mb-2">Kedvezmények</h3>
         <div className="flex flex-col h-44 justify-evenly">
           <Under25 />
-          <JustMarried setIsModalVisible={setIsModalVisible} />
+          <JustMarried />
           <PersonalTax />
           <Family />
         </div>

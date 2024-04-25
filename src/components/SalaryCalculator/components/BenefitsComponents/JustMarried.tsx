@@ -4,11 +4,7 @@ import Entitled from "./MarriedComponents/Entitled";
 import MarriedDate from "./MarriedComponents/MarriedDate";
 import { useMemberContext } from "../../../../hooks/useMemberContext";
 
-type JustMarriedProps = {
-  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
-};
-
-const JustMarried = ({ setIsModalVisible }: JustMarriedProps): ReactElement => {
+const JustMarried = (): ReactElement => {
   const { setMembers, updateMembers, selectedMember } = useMemberContext();
 
   const handleClick = () => {
@@ -25,7 +21,7 @@ const JustMarried = ({ setIsModalVisible }: JustMarriedProps): ReactElement => {
 
       {selectedMember().justMarried && (
         <div className="flex justify-center items-center gap-1 sm:justify-evenly sm:w-2/4">
-          <MarriedDate setIsModalVisible={setIsModalVisible} />
+          <MarriedDate />
           {selectedMember().marriedDate && <Entitled />}
         </div>
       )}

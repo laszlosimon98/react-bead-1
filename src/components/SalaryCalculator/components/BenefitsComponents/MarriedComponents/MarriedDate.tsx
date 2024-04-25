@@ -1,12 +1,12 @@
-import { Dispatch, ReactElement, SetStateAction } from "react";
+import { ReactElement } from "react";
+import { activate } from "../../../../../store/features/modal/modalSlice";
+import { useAppDispatch } from "../../../../../hooks/reduxHooks";
 
-type MarriedDateProps = {
-  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
-};
+const MarriedDate = (): ReactElement => {
+  const dispatch = useAppDispatch();
 
-const MarriedDate = ({ setIsModalVisible }: MarriedDateProps): ReactElement => {
   const handleModalVisible = () => {
-    setIsModalVisible(true);
+    dispatch(activate());
   };
 
   return (
