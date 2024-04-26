@@ -1,14 +1,28 @@
-import { Dispatch, ReactElement, SetStateAction } from "react";
+import { ReactElement } from "react";
 import CheckBox from "../InputComponents/CheckBox";
 import Entitled from "./MarriedComponents/Entitled";
 import MarriedDate from "./MarriedComponents/MarriedDate";
-import { useMemberContext } from "../../../../hooks/useMemberContext";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../../store/features/members/membersSlice";
 
 const JustMarried = (): ReactElement => {
-  const { setMembers, updateMembers, selectedMember } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    setMembers(updateMembers("justMarried", !selectedMember().justMarried));
+    dispatch(
+      updateMember({
+        property: "justMarried",
+        value: !selectedMember.justMarried,
+      })
+    );
+    dispatch(updateNet());
   };
 
   return (
@@ -16,13 +30,13 @@ const JustMarried = (): ReactElement => {
       <CheckBox
         label="Friss házasok kedvezménye"
         handleClick={handleClick}
-        checked={selectedMember().justMarried}
+        checked={selectedMember.justMarried}
       />
 
-      {selectedMember().justMarried && (
+      {selectedMember.justMarried && (
         <div className="flex justify-center items-center gap-1 sm:justify-evenly sm:w-2/4">
           <MarriedDate />
-          {selectedMember().marriedDate && <Entitled />}
+          {selectedMember.marriedDate && <Entitled />}
         </div>
       )}
     </div>

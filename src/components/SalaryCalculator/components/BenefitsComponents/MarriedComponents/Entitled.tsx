@@ -1,16 +1,19 @@
 import { ReactElement } from "react";
-import { useMemberContext } from "../../../../../hooks/useMemberContext";
+import { MemberState } from "../../../../../store/features/members/membersSlice";
+import { useAppSelector } from "../../../../../hooks/reduxHooks";
 
 const Entitled = (): ReactElement => {
-  const { selectedMember } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
 
   return (
     <div
       className={`${
-        selectedMember().isEntitled ? "bg-green-700" : "bg-red-700"
+        selectedMember.isEntitled ? "bg-green-700" : "bg-red-700"
       } text-white text-sm w-[6rem] flex justify-center items-center rounded-md`}
     >
-      {selectedMember().isEntitled ? "Jogosult" : "Nem Jogosult"}
+      {selectedMember.isEntitled ? "Jogosult" : "Nem Jogosult"}
     </div>
   );
 };

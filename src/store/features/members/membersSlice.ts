@@ -1,5 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { initMemberState } from "../../../data/exampleData";
+import useLocalStorage from "../../../hooks/useLocalStorage";
+
+type updateType = {
+  property: string;
+  value: number | string | boolean;
+};
 
 export type MemberState = {
   [key: string]: string | number | boolean;
@@ -18,59 +24,171 @@ export type MemberState = {
   beneficiaryDependents: number;
 };
 
-const initialState: MemberState[] = initMemberState;
+const LoadData = () => {
+  const { loadMembers, saveMembers } = useLocalStorage("members");
+
+  return { loadMembers, saveMembers };
+};
+
+const initialState: MemberState[] = LoadData().loadMembers() || initMemberState;
+
+const generateNewMember = (id: number) => {
+  return {
+    id,
+    name: "Új tag",
+    bsalary: 0,
+    nsalary: 0,
+    selected: true,
+    under25: false,
+    justMarried: false,
+    personal: false,
+    family: false,
+    marriedDate: "",
+    isEntitled: false,
+    dependents: 1,
+    beneficiaryDependents: 1,
+  };
+};
+
+const calcSalary = (selected: MemberState): number => {
+  let tax = selected.bsalary * 0.185;
+
+  if (!selected.under25) {
+    tax += selected.bsalary * 0.15;
+  }
+
+  if (selected.under25 && selected.bsalary > 499952) {
+    tax += (selected.bsalary - 499952) * 0.15;
+  }
+
+  if (selected.personal) {
+    tax = Math.max(tax - 77300, 0);
+  }
+
+  let salary = Math.round(selected.bsalary - tax);
+
+  if (selected.family) {
+    const amount: number =
+      selected.beneficiaryDependents === 1
+        ? 10000
+        : selected.beneficiaryDependents === 2
+        ? 20000
+        : 30000;
+
+    salary += amount * selected.dependents;
+  }
+
+  if (selected.justMarried && selected.isEntitled) {
+    salary += 5000;
+  }
+
+  return salary;
+};
 
 export const membersSlice = createSlice({
   name: "members",
   initialState,
   reducers: {
     selectMember: (state, action: PayloadAction<MemberState>) => {
-      console.log("called");
-      return state.map((member) => ({
+      const newState = state.map((member) => ({
         ...member,
         selected: member.id === action.payload.id,
       }));
+
+      LoadData().saveMembers(newState);
+      return newState;
     },
     addMember: (state) => {
-      const newMember: MemberState = {
-        id: state.length ? state[state.length - 1].id + 1 : 1,
-        name: "Új tag",
-        bsalary: 0,
-        nsalary: 0,
-        selected: true,
-        under25: false,
-        justMarried: false,
-        personal: false,
-        family: false,
-        marriedDate: "",
-        isEntitled: false,
-        dependents: 1,
-        beneficiaryDependents: 1,
-      };
+      const id = state.length ? state[state.length - 1].id + 1 : 1;
+      const newMember: MemberState = generateNewMember(id);
 
       const resetState = state.map((member) => ({
         ...member,
         selected: false,
       }));
 
+      LoadData().saveMembers([...resetState, newMember]);
       return [...resetState, newMember];
     },
     deleteMember: (state) => {
+      const selectedIndex = state.findIndex((member) => member.selected);
       let remainingMembers = state.filter((member) => !member.selected);
 
-      if (remainingMembers) {
-        const firstMember = {
-          ...remainingMembers[0],
+      const index =
+        selectedIndex !== state.length - 1 ? selectedIndex : selectedIndex - 1;
+
+      if (remainingMembers.length) {
+        const newSelected = {
+          ...remainingMembers[index],
           selected: true,
         };
 
-        remainingMembers = [firstMember, ...remainingMembers.slice(1)];
+        remainingMembers = [
+          ...remainingMembers.slice(0, index),
+          newSelected,
+          ...remainingMembers.slice(index + 1),
+        ];
       }
+
+      LoadData().saveMembers(remainingMembers);
       return remainingMembers;
+    },
+    updateMember: (state, action: PayloadAction<updateType>) => {
+      const newState = state.map((member) => {
+        if (member.selected) {
+          member = {
+            ...member,
+            [action.payload.property]: action.payload.value,
+          };
+        }
+        return member;
+      });
+
+      LoadData().saveMembers(newState);
+      return newState;
+    },
+    initNet: (state) => {
+      const newState = state.map((member) => ({
+        ...member,
+        nsalary: calcSalary(member),
+      }));
+
+      LoadData().saveMembers(newState);
+      return newState;
+    },
+    updateNet: (state) => {
+      const selectedIndex = state.findIndex((member) => member.selected);
+      const selectedMember = state.find(
+        (member) => member.selected
+      ) as MemberState;
+
+      const updatedMember = {
+        ...selectedMember,
+        nsalary: calcSalary(selectedMember),
+      };
+
+      LoadData().saveMembers([
+        ...state.slice(0, selectedIndex),
+        updatedMember,
+        ...state.slice(selectedIndex + 1),
+      ]);
+
+      return [
+        ...state.slice(0, selectedIndex),
+        updatedMember,
+        ...state.slice(selectedIndex + 1),
+      ];
     },
   },
 });
 
-export const { selectMember, addMember, deleteMember } = membersSlice.actions;
+export const {
+  selectMember,
+  addMember,
+  deleteMember,
+  updateMember,
+  initNet,
+  updateNet,
+} = membersSlice.actions;
 
 export default membersSlice.reducer;

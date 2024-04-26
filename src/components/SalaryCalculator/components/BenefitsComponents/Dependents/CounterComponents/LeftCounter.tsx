@@ -1,18 +1,42 @@
 import { ReactElement } from "react";
 import Template from "./Template";
-import { useMemberContext } from "../../../../../../hooks/useMemberContext";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../../../../store/features/members/membersSlice";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../../hooks/reduxHooks";
 
 export const LeftCounter = (): ReactElement => {
-  const { setMembers, updateMembers, selectedMember } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+
+  const dispatch = useAppDispatch();
 
   const handleDecrease = () => {
-    if (selectedMember().dependents > 1) {
-      setMembers(updateMembers("dependents", selectedMember().dependents - 1));
+    if (selectedMember.dependents > 1) {
+      dispatch(
+        updateMember({
+          property: "dependents",
+          value: selectedMember.dependents - 1,
+        })
+      );
     }
+    dispatch(updateNet());
   };
 
   const handleIncrease = () => {
-    setMembers(updateMembers("dependents", selectedMember().dependents + 1));
+    dispatch(
+      updateMember({
+        property: "dependents",
+        value: selectedMember.dependents + 1,
+      })
+    );
+    dispatch(updateNet());
   };
 
   return (
@@ -20,7 +44,7 @@ export const LeftCounter = (): ReactElement => {
       <Template
         handleDecrease={handleDecrease}
         handleIncrease={handleIncrease}
-        count={selectedMember().dependents}
+        count={selectedMember.dependents}
       />
     </>
   );

@@ -1,5 +1,10 @@
 import { ChangeEvent, ReactElement } from "react";
-import { useMemberContext } from "../../../../hooks/useMemberContext";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../../store/features/members/membersSlice";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 
 type InputProps = {
   title: string;
@@ -14,13 +19,18 @@ const Input = ({
   property,
   inputType,
 }: InputProps): ReactElement => {
-  const { setMembers, selectedMember, updateMembers } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+
+  const dispatch = useAppDispatch();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value =
       inputType === "number" ? parseInt(e.target.value) | 0 : e.target.value;
 
-    setMembers(updateMembers(property, value));
+    dispatch(updateMember({ property, value }));
+    dispatch(updateNet());
   };
 
   return (
@@ -34,7 +44,7 @@ const Input = ({
         name={name}
         id={name}
         onInput={handleInput}
-        value={selectedMember()[property] as string}
+        value={selectedMember[property] as string}
       />
       <p className="text-sm lowercase first-letter:uppercase opacity-70 mt-1 mb-2">
         Add meg a {title}t!

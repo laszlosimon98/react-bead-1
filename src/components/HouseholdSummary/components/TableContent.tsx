@@ -1,8 +1,9 @@
 import { ReactElement } from "react";
-import { useMemberContext } from "../../../hooks/useMemberContext";
+import { MemberState } from "../../../store/features/members/membersSlice";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const TableContent = (): ReactElement => {
-  const { members } = useMemberContext();
+  const members: MemberState[] = useAppSelector((state) => state.members);
 
   return (
     <>

@@ -6,37 +6,21 @@ import PersonalTax from "./components/BenefitsComponents/PersonalTax";
 import Slider from "./components/InputComponents/Slider";
 import Under25 from "./components/BenefitsComponents/Under25";
 import { ReactElement, useEffect } from "react";
-import { useMemberContext } from "../../hooks/useMemberContext";
+import {
+  MemberState,
+  initNet,
+} from "../../store/features/members/membersSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
 const SalaryCalculator = (): ReactElement => {
-  const { selectedMember, initNetto, updateNetto } = useMemberContext();
-  const {
-    bsalary,
-    nsalary,
-    under25,
-    justMarried,
-    personal,
-    family,
-    isEntitled,
-    dependents,
-    beneficiaryDependents,
-  } = selectedMember();
+  const selectedMember: MemberState | undefined = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    updateNetto();
-  }, [
-    bsalary,
-    under25,
-    justMarried,
-    personal,
-    family,
-    isEntitled,
-    dependents,
-    beneficiaryDependents,
-  ]);
-
-  useEffect(() => {
-    initNetto();
+    dispatch(initNet());
   }, []);
 
   return (
@@ -44,7 +28,7 @@ const SalaryCalculator = (): ReactElement => {
       <div className="w-full">
         <div className="flex flex-col sm:items-center sm:justify-center w-full">
           <h2 className="uppercase text-md font-bold sm:text-lg md:text-xl lg:text-xl text-center">
-            {selectedMember().name} Bérének kiszámítása
+            {selectedMember.name} Bérének kiszámítása
           </h2>
 
           <Input
@@ -84,7 +68,7 @@ const SalaryCalculator = (): ReactElement => {
           Számított nettó bér:
         </h3>
         <div className="bg-zinc-700 text-white sm:mt-3 w-[8.5rem] h-12 flex justify-center items-center rounded-lg">
-          {nsalary} Ft
+          {selectedMember.nsalary} Ft
         </div>
       </div>
     </div>

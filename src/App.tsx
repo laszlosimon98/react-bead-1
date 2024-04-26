@@ -1,5 +1,4 @@
 import HouseholdSalaryCalculator from "./components/HouseholdSalaryCalculator";
-import { MemberProvider } from "./context/MembersProvider";
 
 function App() {
   return (
@@ -7,9 +6,7 @@ function App() {
       <h1 className="text-3xl text-center underline">
         Bérkalkulátor alkalmazás
       </h1>
-      <MemberProvider>
-        <HouseholdSalaryCalculator />
-      </MemberProvider>
+      <HouseholdSalaryCalculator />
     </div>
   );
 }

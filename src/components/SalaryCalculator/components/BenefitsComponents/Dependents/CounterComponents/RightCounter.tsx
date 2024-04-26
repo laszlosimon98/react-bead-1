@@ -1,41 +1,58 @@
-import { ReactElement, useCallback, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import Template from "./Template";
-import { useMemberContext } from "../../../../../../hooks/useMemberContext";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../../../../store/features/members/membersSlice";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../../hooks/reduxHooks";
 
 export const RightCounter = (): ReactElement => {
-  const { setMembers, updateMembers, selectedMember } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (selectedMember().dependents < selectedMember().beneficiaryDependents) {
-      setMembers(
-        updateMembers("beneficiaryDependents", selectedMember().dependents)
+    if (selectedMember.dependents < selectedMember.beneficiaryDependents) {
+      dispatch(
+        updateMember({
+          property: "beneficiaryDependents",
+          value: selectedMember.dependents,
+        })
       );
     }
-  }, [selectedMember().dependents]);
+  }, [selectedMember.dependents]);
 
   const handleDecrease = () => {
-    if (selectedMember().beneficiaryDependents > 1) {
-      setMembers(
-        updateMembers(
-          "beneficiaryDependents",
-          selectedMember().beneficiaryDependents - 1
-        )
+    if (selectedMember.beneficiaryDependents > 1) {
+      dispatch(
+        updateMember({
+          property: "beneficiaryDependents",
+          value: selectedMember.beneficiaryDependents - 1,
+        })
       );
     }
+    dispatch(updateNet());
   };
 
   const handleIncrease = () => {
     if (
-      selectedMember().beneficiaryDependents <
-      Math.min(selectedMember().dependents, 3)
+      selectedMember.beneficiaryDependents <
+      Math.min(selectedMember.dependents, 3)
     ) {
-      setMembers(
-        updateMembers(
-          "beneficiaryDependents",
-          selectedMember().beneficiaryDependents + 1
-        )
+      dispatch(
+        updateMember({
+          property: "beneficiaryDependents",
+          value: selectedMember.beneficiaryDependents + 1,
+        })
       );
     }
+    dispatch(updateNet());
   };
 
   return (
@@ -43,7 +60,7 @@ export const RightCounter = (): ReactElement => {
       <Template
         handleDecrease={handleDecrease}
         handleIncrease={handleIncrease}
-        count={selectedMember().beneficiaryDependents}
+        count={selectedMember.beneficiaryDependents}
       />
     </>
   );

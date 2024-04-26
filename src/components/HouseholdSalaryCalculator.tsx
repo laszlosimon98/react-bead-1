@@ -2,12 +2,12 @@ import { ReactElement } from "react";
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
-import { useMemberContext } from "../hooks/useMemberContext";
 import Modal from "./SalaryCalculator/components/Modal";
 import { useAppSelector } from "../hooks/reduxHooks";
+import { MemberState } from "../store/features/members/membersSlice";
 
 const HouseholdSalaryCalculator = (): ReactElement => {
-  const { members } = useMemberContext();
+  const members: MemberState[] = useAppSelector((state) => state.members);
   const isVisible = useAppSelector((state) => state.modal.isVisible);
 
   return (

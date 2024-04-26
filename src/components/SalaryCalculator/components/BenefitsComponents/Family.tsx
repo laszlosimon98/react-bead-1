@@ -1,22 +1,33 @@
 import { ReactElement } from "react";
 import CheckBox from "../InputComponents/CheckBox";
 import Dependents from "./Dependents/Dependents";
-import { useMemberContext } from "../../../../hooks/useMemberContext";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../../store/features/members/membersSlice";
 
 const Family = (): ReactElement => {
-  const { setMembers, updateMembers, selectedMember } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    setMembers(updateMembers("family", !selectedMember().family));
+    dispatch(
+      updateMember({ property: "family", value: !selectedMember.family })
+    );
+    dispatch(updateNet());
   };
   return (
     <div className="h-14 flex flex-col justify-between">
       <CheckBox
         label="Családi kedvezmény"
         handleClick={handleClick}
-        checked={selectedMember().family}
+        checked={selectedMember.family}
       />
-      {selectedMember().family && <Dependents />}
+      {selectedMember.family && <Dependents />}
     </div>
   );
 };

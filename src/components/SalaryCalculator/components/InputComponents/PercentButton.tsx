@@ -1,19 +1,29 @@
 import { ReactElement } from "react";
-import { useMemberContext } from "../../../../hooks/useMemberContext";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../../store/features/members/membersSlice";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 
 type PercentButtonProps = {
   value: number;
 };
 
 const PercentButton = ({ value }: PercentButtonProps): ReactElement => {
-  const { setMembers, selectedMember, updateMembers } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
     const salary =
-      selectedMember().bsalary +
-      Math.round(selectedMember().bsalary * (value / 100));
+      selectedMember.bsalary +
+      Math.round(selectedMember.bsalary * (value / 100));
 
-    setMembers(updateMembers("bsalary", salary));
+    dispatch(updateMember({ property: "bsalary", value: salary }));
+    dispatch(updateNet());
   };
   return (
     <>

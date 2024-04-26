@@ -1,14 +1,25 @@
 import { ChangeEvent, ReactElement } from "react";
-import { useMemberContext } from "../../../hooks/useMemberContext";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { closeModal } from "../../../store/features/modal/modalSlice";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../store/features/members/membersSlice";
 
 const Modal = (): ReactElement => {
-  const { setMembers, selectedMember, updateMembers } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
   const dispatch = useAppDispatch();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setMembers(updateMembers("marriedDate", e.target.value));
+    dispatch(
+      updateMember({
+        property: "marriedDate",
+        value: e.target.value,
+      })
+    );
   };
 
   const handleClose = () => {
@@ -21,15 +32,21 @@ const Modal = (): ReactElement => {
       currentDate.getFullYear() * 12 + currentDate.getMonth();
 
     const marriedYear: number = parseInt(
-      selectedMember().marriedDate.split("/")[0]
+      selectedMember.marriedDate.split("/")[0]
     );
 
     const marriedMonth: number = parseInt(
-      selectedMember().marriedDate.split("/")[1]
+      selectedMember.marriedDate.split("/")[1]
     );
 
-    selectedMember().isEntitled =
-      current - (marriedYear * 12 + marriedMonth) <= 24;
+    dispatch(
+      updateMember({
+        property: "isEntitled",
+        value: current - (marriedYear * 12 + marriedMonth) <= 24,
+      })
+    );
+    dispatch(updateNet());
+
     handleClose();
   };
 
@@ -49,7 +66,7 @@ const Modal = (): ReactElement => {
         placeholder="YYYY/MM/DD"
         className="w-3/4 h-8 p-2 rounded-md shadow-sm"
         onInput={handleInput}
-        value={selectedMember().marriedDate}
+        value={selectedMember.marriedDate}
         maxLength={10}
       />
 

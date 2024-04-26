@@ -1,12 +1,26 @@
 import { ReactElement } from "react";
 import CheckBox from "../InputComponents/CheckBox";
-import { useMemberContext } from "../../../../hooks/useMemberContext";
+import {
+  MemberState,
+  updateMember,
+  updateNet,
+} from "../../../../store/features/members/membersSlice";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 
 const Under25 = (): ReactElement => {
-  const { setMembers, updateMembers, selectedMember } = useMemberContext();
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.selected)
+  ) as MemberState;
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    setMembers(updateMembers("under25", !selectedMember().under25));
+    dispatch(
+      updateMember({
+        property: "under25",
+        value: !selectedMember.under25,
+      })
+    );
+    dispatch(updateNet());
   };
 
   return (
@@ -14,7 +28,7 @@ const Under25 = (): ReactElement => {
       <CheckBox
         label="25 év alattiak SZJA mentessége"
         handleClick={handleClick}
-        checked={selectedMember().under25}
+        checked={selectedMember.under25}
       />
     </>
   );
