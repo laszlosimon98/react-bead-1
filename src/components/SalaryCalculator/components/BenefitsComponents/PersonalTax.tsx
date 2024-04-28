@@ -9,15 +9,15 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 
 const PersonalTax = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
     dispatch(
       updateMember({
-        property: "personal",
-        value: !selectedMember.personal,
+        property: "isPersonalChecked",
+        value: !selectedMember.isPersonalChecked,
       })
     );
     dispatch(updateNet());
@@ -28,7 +28,7 @@ const PersonalTax = (): ReactElement => {
       <CheckBox
         label="Személyi adókedvezmény"
         handleClick={handleClick}
-        checked={selectedMember.personal}
+        checked={selectedMember.isPersonalChecked}
       />
     </>
   );

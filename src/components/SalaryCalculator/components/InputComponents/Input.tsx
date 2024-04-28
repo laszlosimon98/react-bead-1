@@ -20,7 +20,7 @@ const Input = ({
   inputType,
 }: InputProps): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
 
   const dispatch = useAppDispatch();

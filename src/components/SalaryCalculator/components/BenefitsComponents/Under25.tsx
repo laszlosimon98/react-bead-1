@@ -9,15 +9,15 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
 
 const Under25 = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
     dispatch(
       updateMember({
-        property: "under25",
-        value: !selectedMember.under25,
+        property: "isUnder25Checked",
+        value: !selectedMember.isUnder25Checked,
       })
     );
     dispatch(updateNet());
@@ -28,7 +28,7 @@ const Under25 = (): ReactElement => {
       <CheckBox
         label="25 év alattiak SZJA mentessége"
         handleClick={handleClick}
-        checked={selectedMember.under25}
+        checked={selectedMember.isUnder25Checked}
       />
     </>
   );

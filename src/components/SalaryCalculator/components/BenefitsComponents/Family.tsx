@@ -10,13 +10,16 @@ import {
 
 const Family = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
     dispatch(
-      updateMember({ property: "family", value: !selectedMember.family })
+      updateMember({
+        property: "isFamilyChecked",
+        value: !selectedMember.isFamilyChecked,
+      })
     );
     dispatch(updateNet());
   };
@@ -25,9 +28,9 @@ const Family = (): ReactElement => {
       <CheckBox
         label="Családi kedvezmény"
         handleClick={handleClick}
-        checked={selectedMember.family}
+        checked={selectedMember.isFamilyChecked}
       />
-      {selectedMember.family && <Dependents />}
+      {selectedMember.isFamilyChecked && <Dependents />}
     </div>
   );
 };

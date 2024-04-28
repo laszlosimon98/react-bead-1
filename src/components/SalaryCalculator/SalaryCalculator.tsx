@@ -13,8 +13,8 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
 const SalaryCalculator = (): ReactElement => {
-  const selectedMember: MemberState | undefined = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+  const selectedMember: MemberState = useAppSelector((state) =>
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
 
   const dispatch = useAppDispatch();

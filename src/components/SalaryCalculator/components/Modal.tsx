@@ -9,14 +9,14 @@ import {
 
 const Modal = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
   const dispatch = useAppDispatch();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(
       updateMember({
-        property: "marriedDate",
+        property: "hasMarriedDate",
         value: e.target.value,
       })
     );
@@ -32,11 +32,11 @@ const Modal = (): ReactElement => {
       currentDate.getFullYear() * 12 + currentDate.getMonth();
 
     const marriedYear: number = parseInt(
-      selectedMember.marriedDate.split("/")[0]
+      selectedMember.hasMarriedDate.split("/")[0]
     );
 
     const marriedMonth: number = parseInt(
-      selectedMember.marriedDate.split("/")[1]
+      selectedMember.hasMarriedDate.split("/")[1]
     );
 
     dispatch(
@@ -66,7 +66,7 @@ const Modal = (): ReactElement => {
         placeholder="YYYY/MM/DD"
         className="w-3/4 h-8 p-2 rounded-md shadow-sm"
         onInput={handleInput}
-        value={selectedMember.marriedDate}
+        value={selectedMember.hasMarriedDate}
         maxLength={10}
       />
 

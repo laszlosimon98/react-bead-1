@@ -12,7 +12,7 @@ type PercentButtonProps = {
 
 const PercentButton = ({ value }: PercentButtonProps): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
 
   const dispatch = useAppDispatch();

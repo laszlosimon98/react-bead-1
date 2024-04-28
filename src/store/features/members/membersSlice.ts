@@ -13,12 +13,12 @@ export type MemberState = {
   name: string;
   bsalary: number;
   nsalary: number;
-  selected: boolean;
-  under25: boolean;
-  justMarried: boolean;
-  personal: boolean;
-  family: boolean;
-  marriedDate: string;
+  isSelected: boolean;
+  isUnder25Checked: boolean;
+  isJustMarriedChecked: boolean;
+  isPersonalChecked: boolean;
+  isFamilyChecked: boolean;
+  hasMarriedDate: string;
   isEntitled: boolean;
   dependents: number;
   beneficiaryDependents: number;
@@ -38,12 +38,12 @@ const generateNewMember = (id: number) => {
     name: "Új tag",
     bsalary: 0,
     nsalary: 0,
-    selected: true,
-    under25: false,
-    justMarried: false,
-    personal: false,
-    family: false,
-    marriedDate: "",
+    isSelected: true,
+    isUnder25Checked: false,
+    isJustMarriedChecked: false,
+    isPersonalChecked: false,
+    isFamilyChecked: false,
+    hasMarriedDate: "",
     isEntitled: false,
     dependents: 1,
     beneficiaryDependents: 1,
@@ -53,21 +53,21 @@ const generateNewMember = (id: number) => {
 const calcSalary = (selected: MemberState): number => {
   let tax = selected.bsalary * 0.185;
 
-  if (!selected.under25) {
+  if (!selected.isUnder25Checked) {
     tax += selected.bsalary * 0.15;
   }
 
-  if (selected.under25 && selected.bsalary > 499952) {
+  if (selected.isUnder25Checked && selected.bsalary > 499952) {
     tax += (selected.bsalary - 499952) * 0.15;
   }
 
-  if (selected.personal) {
+  if (selected.isPersonalChecked) {
     tax = Math.max(tax - 77300, 0);
   }
 
   let salary = Math.round(selected.bsalary - tax);
 
-  if (selected.family) {
+  if (selected.isFamilyChecked) {
     const amount: number =
       selected.beneficiaryDependents === 1
         ? 10000
@@ -78,7 +78,7 @@ const calcSalary = (selected: MemberState): number => {
     salary += amount * selected.dependents;
   }
 
-  if (selected.justMarried && selected.isEntitled) {
+  if (selected.isJustMarriedChecked && selected.isEntitled) {
     salary += 5000;
   }
 
@@ -92,7 +92,7 @@ export const membersSlice = createSlice({
     selectMember: (state, action: PayloadAction<MemberState>) => {
       const newState = state.map((member) => ({
         ...member,
-        selected: member.id === action.payload.id,
+        isSelected: member.id === action.payload.id,
       }));
 
       LoadData().saveMembers(newState);
@@ -104,15 +104,15 @@ export const membersSlice = createSlice({
 
       const resetState = state.map((member) => ({
         ...member,
-        selected: false,
+        isSelected: false,
       }));
 
       LoadData().saveMembers([...resetState, newMember]);
       return [...resetState, newMember];
     },
     deleteMember: (state) => {
-      const selectedIndex = state.findIndex((member) => member.selected);
-      let remainingMembers = state.filter((member) => !member.selected);
+      const selectedIndex = state.findIndex((member) => member.isSelected);
+      let remainingMembers = state.filter((member) => !member.isSelected);
 
       const index =
         selectedIndex !== state.length - 1 ? selectedIndex : selectedIndex - 1;
@@ -120,7 +120,7 @@ export const membersSlice = createSlice({
       if (remainingMembers.length) {
         const newSelected = {
           ...remainingMembers[index],
-          selected: true,
+          isSelected: true,
         };
 
         remainingMembers = [
@@ -135,7 +135,7 @@ export const membersSlice = createSlice({
     },
     updateMember: (state, action: PayloadAction<updateType>) => {
       const newState = state.map((member) => {
-        if (member.selected) {
+        if (member.isSelected) {
           member = {
             ...member,
             [action.payload.property]: action.payload.value,
@@ -157,9 +157,9 @@ export const membersSlice = createSlice({
       return newState;
     },
     updateNet: (state) => {
-      const selectedIndex = state.findIndex((member) => member.selected);
+      const selectedIndex = state.findIndex((member) => member.isSelected);
       const selectedMember = state.find(
-        (member) => member.selected
+        (member) => member.isSelected
       ) as MemberState;
 
       const updatedMember = {

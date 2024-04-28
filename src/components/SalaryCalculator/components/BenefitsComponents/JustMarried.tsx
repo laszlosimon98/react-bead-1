@@ -11,15 +11,15 @@ import {
 
 const JustMarried = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
     dispatch(
       updateMember({
-        property: "justMarried",
-        value: !selectedMember.justMarried,
+        property: "isJustMarriedChecked",
+        value: !selectedMember.isJustMarriedChecked,
       })
     );
     dispatch(updateNet());
@@ -30,13 +30,13 @@ const JustMarried = (): ReactElement => {
       <CheckBox
         label="Friss házasok kedvezménye"
         handleClick={handleClick}
-        checked={selectedMember.justMarried}
+        checked={selectedMember.isJustMarriedChecked}
       />
 
-      {selectedMember.justMarried && (
+      {selectedMember.isJustMarriedChecked && (
         <div className="flex justify-center items-center gap-1 sm:justify-evenly sm:w-2/4">
           <MarriedDate />
-          {selectedMember.marriedDate && <Entitled />}
+          {selectedMember.hasMarriedDate && <Entitled />}
         </div>
       )}
     </div>

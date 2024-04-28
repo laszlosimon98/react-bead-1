@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../../../hooks/reduxHooks";
 
 const Entitled = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.selected)
+    state.members.find((member) => member.isSelected)
   ) as MemberState;
 
   return (
