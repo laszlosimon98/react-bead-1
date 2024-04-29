@@ -9,11 +9,12 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../../../hooks/reduxHooks";
+import { getSelectedMember } from "../../../../../../store/features/members/memberUtil";
 
 export const RightCounter = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.isSelected)
-  ) as MemberState;
+    getSelectedMember(state)
+  );
 
   const dispatch = useAppDispatch();
 

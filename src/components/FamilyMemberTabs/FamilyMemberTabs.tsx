@@ -5,7 +5,7 @@ import { ReactElement } from "react";
 import { useAppSelector } from "../../hooks/reduxHooks";
 
 const FamilyMemberTabs = (): ReactElement => {
-  const members = useAppSelector((state) => state.members);
+  const members = useAppSelector((state) => state.members.data);
 
   return (
     <div className="flex absolute -top-12 w-full">

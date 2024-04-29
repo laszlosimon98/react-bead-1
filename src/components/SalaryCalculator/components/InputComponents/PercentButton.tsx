@@ -5,6 +5,7 @@ import {
   updateNet,
 } from "../../../../store/features/members/membersSlice";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/reduxHooks";
+import { getSelectedMember } from "../../../../store/features/members/memberUtil";
 
 type PercentButtonProps = {
   value: number;
@@ -12,8 +13,8 @@ type PercentButtonProps = {
 
 const PercentButton = ({ value }: PercentButtonProps): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.isSelected)
-  ) as MemberState;
+    getSelectedMember(state)
+  );
 
   const dispatch = useAppDispatch();
 

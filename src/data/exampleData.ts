@@ -1,6 +1,6 @@
 import { MemberState } from "../store/features/members/membersSlice";
 
-export const initMemberState: MemberState[] = [
+export const exampleData: MemberState[] = [
   {
     id: 1,
     name: "Teszt Elek",

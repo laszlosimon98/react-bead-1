@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { initMemberState } from "../../../data/exampleData";
+import { exampleData } from "../../../data/exampleData";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 
 type updateType = {
@@ -30,7 +30,9 @@ const LoadData = () => {
   return { loadMembers, saveMembers };
 };
 
-const initialState: MemberState[] = LoadData().loadMembers() || initMemberState;
+const initialState = {
+  data: (LoadData().loadMembers() || exampleData) as MemberState[],
+};
 
 const generateNewMember = (id: number) => {
   return {
@@ -90,32 +92,38 @@ export const membersSlice = createSlice({
   initialState,
   reducers: {
     selectMember: (state, action: PayloadAction<MemberState>) => {
-      const newState = state.map((member) => ({
+      state.data = state.data.map((member) => ({
         ...member,
         isSelected: member.id === action.payload.id,
       }));
 
-      LoadData().saveMembers(newState);
-      return newState;
+      LoadData().saveMembers(state.data);
     },
     addMember: (state) => {
-      const id = state.length ? state[state.length - 1].id + 1 : 1;
+      const id = state.data.length
+        ? state.data[state.data.length - 1].id + 1
+        : 1;
       const newMember: MemberState = generateNewMember(id);
 
-      const resetState = state.map((member) => ({
+      const resetState = state.data.map((member) => ({
         ...member,
         isSelected: false,
       }));
 
-      LoadData().saveMembers([...resetState, newMember]);
-      return [...resetState, newMember];
+      state.data = [...resetState, newMember];
+
+      LoadData().saveMembers(state.data);
     },
     deleteMember: (state) => {
-      const selectedIndex = state.findIndex((member) => member.isSelected);
-      let remainingMembers = state.filter((member) => !member.isSelected);
+      const selectedIndex = state.data.findIndex((member) => member.isSelected);
+      const remainingMembers = state.data.filter(
+        (member) => !member.isSelected
+      );
 
       const index =
-        selectedIndex !== state.length - 1 ? selectedIndex : selectedIndex - 1;
+        selectedIndex !== state.data.length - 1
+          ? selectedIndex
+          : selectedIndex - 1;
 
       if (remainingMembers.length) {
         const newSelected = {
@@ -123,18 +131,16 @@ export const membersSlice = createSlice({
           isSelected: true,
         };
 
-        remainingMembers = [
+        state.data = [
           ...remainingMembers.slice(0, index),
           newSelected,
           ...remainingMembers.slice(index + 1),
         ];
       }
-
-      LoadData().saveMembers(remainingMembers);
-      return remainingMembers;
+      LoadData().saveMembers(state.data);
     },
     updateMember: (state, action: PayloadAction<updateType>) => {
-      const newState = state.map((member) => {
+      state.data = state.data.map((member) => {
         if (member.isSelected) {
           member = {
             ...member,
@@ -144,21 +150,19 @@ export const membersSlice = createSlice({
         return member;
       });
 
-      LoadData().saveMembers(newState);
-      return newState;
+      LoadData().saveMembers(state.data);
     },
     initNet: (state) => {
-      const newState = state.map((member) => ({
+      state.data = state.data.map((member) => ({
         ...member,
         nsalary: calcSalary(member),
       }));
 
-      LoadData().saveMembers(newState);
-      return newState;
+      LoadData().saveMembers(state.data);
     },
     updateNet: (state) => {
-      const selectedIndex = state.findIndex((member) => member.isSelected);
-      const selectedMember = state.find(
+      const selectedIndex = state.data.findIndex((member) => member.isSelected);
+      const selectedMember = state.data.find(
         (member) => member.isSelected
       ) as MemberState;
 
@@ -167,17 +171,13 @@ export const membersSlice = createSlice({
         nsalary: calcSalary(selectedMember),
       };
 
-      LoadData().saveMembers([
-        ...state.slice(0, selectedIndex),
+      state.data = [
+        ...state.data.slice(0, selectedIndex),
         updatedMember,
-        ...state.slice(selectedIndex + 1),
-      ]);
-
-      return [
-        ...state.slice(0, selectedIndex),
-        updatedMember,
-        ...state.slice(selectedIndex + 1),
+        ...state.data.slice(selectedIndex + 1),
       ];
+
+      LoadData().saveMembers(state.data);
     },
   },
 });

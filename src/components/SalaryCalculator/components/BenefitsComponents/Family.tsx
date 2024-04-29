@@ -7,11 +7,12 @@ import {
   updateMember,
   updateNet,
 } from "../../../../store/features/members/membersSlice";
+import { getSelectedMember } from "../../../../store/features/members/memberUtil";
 
 const Family = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.isSelected)
-  ) as MemberState;
+    getSelectedMember(state)
+  );
   const dispatch = useAppDispatch();
 
   const handleClick = () => {

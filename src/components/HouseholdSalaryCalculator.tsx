@@ -7,7 +7,7 @@ import { useAppSelector } from "../hooks/reduxHooks";
 import { MemberState } from "../store/features/members/membersSlice";
 
 const HouseholdSalaryCalculator = (): ReactElement => {
-  const members: MemberState[] = useAppSelector((state) => state.members);
+  const members: MemberState[] = useAppSelector((state) => state.members.data);
   const isVisible = useAppSelector((state) => state.modal.isVisible);
 
   return (

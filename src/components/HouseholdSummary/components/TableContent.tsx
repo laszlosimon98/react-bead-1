@@ -3,7 +3,7 @@ import { MemberState } from "../../../store/features/members/membersSlice";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const TableContent = (): ReactElement => {
-  const members: MemberState[] = useAppSelector((state) => state.members);
+  const members: MemberState[] = useAppSelector((state) => state.members.data);
 
   return (
     <>

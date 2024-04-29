@@ -1,11 +1,12 @@
 import { ReactElement } from "react";
 import { MemberState } from "../../../../../store/features/members/membersSlice";
 import { useAppSelector } from "../../../../../hooks/reduxHooks";
+import { getSelectedMember } from "../../../../../store/features/members/memberUtil";
 
 const Entitled = (): ReactElement => {
   const selectedMember: MemberState = useAppSelector((state) =>
-    state.members.find((member) => member.isSelected)
-  ) as MemberState;
+    getSelectedMember(state)
+  );
 
   return (
     <div
