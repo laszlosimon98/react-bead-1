@@ -15,7 +15,7 @@ const FamilyMemberTabs = (): ReactElement => {
 
       <div className="flex justify-between w-full flex-col sm:flex-row relative sm:static">
         <AddButton />
-        <DeleteButton />
+        {members.length ? <DeleteButton /> : ""}
       </div>
     </div>
   );

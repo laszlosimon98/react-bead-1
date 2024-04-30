@@ -120,6 +120,8 @@ export const membersSlice = createSlice({
         (member) => !member.isSelected
       );
 
+      console.log(remainingMembers, selectedIndex);
+
       const index =
         selectedIndex !== state.data.length - 1
           ? selectedIndex
@@ -136,6 +138,8 @@ export const membersSlice = createSlice({
           newSelected,
           ...remainingMembers.slice(index + 1),
         ];
+      } else {
+        state.data = [];
       }
       LoadData().saveMembers(state.data);
     },
